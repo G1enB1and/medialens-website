@@ -6,7 +6,7 @@ The website is designed to convert visitors into MediaLens downloads while also 
 
 ## Live Site
 
-The site is currently deployed on DreamHost.
+The site is currently deployed on DreamHost at [medialens.glenbland.com](https://medialens.glenbland.com).
 
 ## Project Structure
 
