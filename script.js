@@ -12,7 +12,17 @@ const revealObserver = new IntersectionObserver(
   { threshold: 0.14 }
 );
 
-revealItems.forEach((item) => revealObserver.observe(item));
+revealItems.forEach((item) => {
+  const rect = item.getBoundingClientRect();
+  if (rect.top < window.innerHeight && rect.bottom > 0) {
+    item.classList.add("is-visible");
+    return;
+  }
+
+  revealObserver.observe(item);
+});
+
+document.body.classList.add("reveal-ready");
 
 const liftTarget = document.querySelector(".lift-on-scroll");
 

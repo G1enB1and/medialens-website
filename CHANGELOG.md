@@ -1,6 +1,853 @@
 # Change Log
 
-## v1.1.20 (Current)
+## v1.2.10 (Current)
+
+### Summary
+
+This release focuses on responsiveness in tag filtering, bulk editing, duplicate review, and comparison workflows. MediaLens now shows visible gallery updates sooner, avoids several unnecessary UI refresh passes, and recovers more reliably from panel resizing during review.
+
+### Highlights
+
+- Filter by tags with faster gallery updates and less blocking work from the tag list.
+- Review duplicates and similar files without the gallery waiting indefinitely behind off-screen loading work.
+- Use bulk tag and description editors with clearer per-file Save controls and more stable responsive row layouts.
+
+### Added
+
+- Added per-file Save Tags buttons in the bulk Tags editor.
+- Added per-file Save buttons beside Generate Description in the bulk Descriptions editor.
+- Added targeted performance logging around gallery refreshes, bulk editor rebuilds, metadata selection, and layout syncs.
+- Added short-lived gallery count caching and local AI status caching so repeated refreshes can avoid expensive checks.
+
+### Changed
+
+- Changed typed tag edits so they save only when the user clicks Save instead of auto-saving after input debounce.
+- Changed tag filtering so the gallery and bulk editor update before slower tag-list state refresh work.
+- Changed tag scope counts to update in place and reuse cached scope data when the active scope has not changed.
+- Changed bulk selected-file rows to avoid redundant full layout passes when width, row count, and orientation are unchanged.
+- Changed bulk row action button sizing so longer labels keep enough space before shorter Save buttons borrow equal width.
+- Changed bulk tag and description row buttons to use distinct object names and styling independent of single-file metadata visibility settings.
+- Changed duplicate and similar review loading so review results render directly instead of waiting for detached staged cards.
+- Changed comparison panel show and hide handling to notify the gallery after splitter resizing so WebEngine repaints without requiring a manual resize.
+- Changed startup dark-mode handling so the gallery background is dark before the WebEngine page finishes loading.
+- Changed settings, local AI status checks, scan cache invalidation, and settings-triggered gallery refreshes to do less broad repeated work.
+
+---
+
+## v1.2.9
+
+### Summary
+
+This release expands folder workflows, collection behavior, and file handling while making gallery video playback and sorting more dependable. MediaLens now handles more real-world library layouts with less unnecessary scanning, smoother playback behavior, and clearer fallback handling.
+
+### Highlights
+
+- Drag folders between the gallery, file tree, pinned folders, collections, and external destinations with clearer move, copy, and pin behavior.
+- Keep collections live with folder sources, optional nested file inclusion, and MediaLens recycle bin recovery for deleted folders and file types.
+- Browse and sort larger galleries more smoothly, including WebM playback fixes and lightweight display for non-media files when enabled.
+
+### Added
+
+- Added folder drag-and-drop support for gallery folders, file tree destinations, pinned folders, collections, and Windows File Explorer destinations.
+- Added support for collections that include live folder sources instead of only copied file snapshots.
+- Added MediaLens recycle bin support for deleted folders and all file types that MediaLens can delete.
+- Added a General setting to switch between showing all file types and showing media files only, with lightweight icons for unsupported file types.
+- Added Local AI Models VRAM fit indicators, recommended-model emphasis, and a fit message below the model list.
+
+### Changed
+
+- Changed drag-and-drop tooltips for folders, pinned folders, collections, invalid destinations, and same-destination copy behavior.
+- Changed folder copy and move refresh handling to use narrower cache invalidation instead of broad app-wide cache clearing where possible.
+- Changed collections so folder display and Include nested files behavior match normal gallery folder behavior.
+- Changed unsupported file handling so non-media files avoid expensive metadata, thumbnail, OCR, and AI processing when shown.
+- Changed the Local AI Models window so light mode styling covers the model list and related controls more consistently.
+- Changed delete confirmation dialogs for folders and collections to use MediaLens themed titles, accent colors, and button styling.
+- Changed the empty no-folder gallery message so it spans the gallery, uses bold text, and explains how to pick a folder.
+- Changed in-place gallery video playback to clear stale frames when switching videos.
+- Changed WebM handling so playback controls appear correctly, invalid tiny dimensions no longer collapse masonry cards, and in-place playback sizing is more stable.
+- Changed sort-only gallery refreshes so they skip unnecessary scan and count work.
+
+---
+
+## v1.2.8
+
+### Summary
+
+This release makes MediaLens feel more responsive during everyday browsing and editing. It also adds more direct controls for saving metadata, opening previews, and managing the left sidebar layout without unnecessary scrolling or waiting.
+
+### Highlights
+
+- Switch themes, open settings, toggle hidden files, and return from minimize with less visible lag.
+- Save Tags, Descriptions, or Text OCR directly from their Details panel sections.
+- Collapse sidebar sections and open bulk-editor thumbnails in the same lightbox used by the gallery.
+
+### Added
+
+- Added collapsible headers for Pinned Folders, Folders, Collections, and Smart Collections in the left sidebar.
+- Added targeted Details panel save buttons for Tags, Descriptions, and Text OCR.
+- Added a separator above the bottom Details panel save-all action.
+- Added lightbox opening from preview thumbnails in the bulk Tags and Descriptions editors.
+- Added placeholders for unsupported or corrupt images so blank gallery cards explain what happened.
+
+### Changed
+
+- Changed minimize and restore handling so resize, relayout, and thumbnail background work are coalesced instead of all resuming at once.
+- Changed settings, theme switching, hidden-file toggles, and masonry pagination refresh paths to reduce apparent lag.
+- Changed theme refresh sequencing so native widgets and the web gallery switch together instead of showing a mismatched intermediate state.
+- Changed theme coverage for settings, comparison, OCR review, dialogs, context menus, selection colors, no-text icons, and bulk thumbnail borders.
+- Changed sidebar section size restore so Pinned Folders keeps a usable height across sessions and is protected from being squeezed by the file tree.
+- Changed Details panel tag edits to save through the tag-only path instead of the full save-all handler.
+- Changed bulk editor mode buttons to use the pointing-hand cursor.
+- Changed gallery handling for unsupported or corrupt image files so previews and cards show a clear unavailable state.
+
+---
+
+## v1.2.7
+
+### Summary
+
+This release focuses on making Paddle OCR setup recover cleanly when a previous install attempt failed. MediaLens now builds and verifies OCR runtimes in a clean staging folder before replacing the active runtime, giving GPU systems a more reliable repair path and better diagnostics if something still goes wrong.
+
+### Highlights
+
+- Repair Paddle OCR without leaving the live OCR runtime half-created after a failed install.
+- Keep the Local AI setup page focused on active Paddle install progress instead of stale probe errors.
+- Capture a dedicated Paddle install log so future setup failures are easier to diagnose.
+
+### Added
+
+- Added a dedicated Paddle OCR install log in the existing debugging logs folder.
+
+### Changed
+
+- Changed Paddle OCR install and repair to build a clean staging runtime, probe it, and only activate it after success.
+- Changed Paddle OCR package installs and probes to run from the isolated OCR runtime folder without MediaLens bundle paths ahead of the runtime packages.
+- Changed Paddle OCR GPU install targeting to prefer the current Paddle GPU package version.
+- Changed Local AI setup status handling so background status refreshes do not overwrite active Paddle install progress with stale probe results.
+
+---
+
+## v1.2.6
+
+### Summary
+
+This release makes MediaLens easier to start on more Windows PCs without overwhelming the system. Startup now waits for the user to choose a folder, background scanning is less aggressive, other drives are easier to browse, and local AI setup is more deliberate about downloads and GPU OCR repair.
+
+### Highlights
+
+- Start MediaLens without automatically scanning the whole C drive on first launch.
+- Browse other Windows drives from the folder tree, including external or secondary photo drives.
+- Install and repair Paddle OCR with clearer GPU package checks on compatible NVIDIA systems.
+
+### Added
+
+- Added a Settings > General startup option to open no folder on startup, now used as the default.
+- Added empty-gallery guidance telling users to use File > Open and where to change the startup behavior.
+- Added support for browsing other Windows drives from the folder tree.
+- Added Paddle OCR status details for CPU Paddle, GPU Paddle, PaddleOCR, and detected GPU device count.
+
+### Changed
+
+- Changed startup folder handling so new installs do not automatically open and scan a folder until the user chooses one.
+- Changed Local AI recommended settings so they select the recommended Gemma profile without starting a model download.
+- Changed Gemma recommendation logic so systems without detected NVIDIA VRAM choose the smallest profile instead of the largest profile.
+- Changed background scanning to back off CPU usage so Windows and other apps remain more responsive during large scans.
+- Changed Paddle OCR runtime repair to clear stale Paddle package files before GPU activation.
+- Changed Paddle OCR GPU validation to use a focused Paddle core probe instead of a broader PaddleOCR import during install checks.
+- Changed Paddle OCR repair so compatible NVIDIA systems with GPU preference do not silently settle on CPU fallback after a GPU install failure.
+- Changed Paddle OCR worker startup so bundled NVIDIA package DLL folders are added to the runtime path before OCR starts.
+
+---
+
+## v1.2.5
+
+### Summary
+
+This release makes everyday navigation and setup feel cleaner in MediaLens. Pinned folders can now be reordered directly, settings opens without flashing helper windows, and OCR runtime repair is more resilient when a previous install is stale.
+
+### Highlights
+
+- Reorder Pinned Folders by dragging them into the order you prefer.
+- Open Settings with fewer distracting helper-window flashes from AI runtime checks.
+- Repair Paddle OCR runtimes more reliably when an old or broken install is in the way.
+
+### Added
+
+- Added drag-and-drop sorting for Pinned Folders in the left sidebar.
+
+### Changed
+
+- Changed the Pinned Folders drag preview to show the styled row background, border, folder icon, folder name, and pin icon.
+- Changed AI runtime and GPU probe subprocesses so they start hidden on Windows when status checks run from Settings.
+- Changed shutdown handling for async AI status, media listing, media count, and child-folder callbacks so late results do not touch a deleted Bridge object.
+- Changed Paddle OCR reinstall behavior to recreate stale runtimes before reinstalling and retry GPU activation after a failed runtime probe.
+
+---
+
+## v1.2.4
+
+### Summary
+
+This release makes detailed image review easier in MediaLens. OCR Review and the main image lightbox now support pan and zoom, while comparison workflows keep context, actions, and layout more stable as you move through groups.
+
+### Highlights
+
+- OCR Review images now support cursor-centered zoom and drag panning for precise text inspection.
+- Image lightbox viewing now supports the same scrollwheel zoom and drag panning workflow.
+- Comparison review navigation keeps group context, action controls, and panel sizing more predictable.
+
+### Added
+
+- Added cursor-centered zoom and drag panning to OCR Review images.
+- Added pan and zoom to image and GIF lightbox.
+- Added dedicated single-group review cards for the comparison review flow.
+- Added a Details panel entry point for opening Text OCR Review from the Text OCR group.
+
+### Changed
+
+- Changed OCR Review to show the pan and zoom guidance message when a review image is loaded, while still replacing it with OCR status after generate actions.
+- Changed zoom-out behavior in OCR Review and the image lightbox to recenter the image when returning to fit.
+- Changed single-group comparison review actions to stay on a bottom action row and remain clipped cleanly during resize.
+- Changed comparison review navigation to preserve the comparison panel height and restore group scroll position after closing comparison.
+- Changed comparison group navigation to account for the sticky stats header so selected groups land more consistently.
+- Changed comparison panel image loading and browse text sizing to be more stable.
+
+---
+
+## v1.2.3
+
+### Summary
+
+This release keeps Fast OCR repairs from downgrading a working GPU runtime. MediaLens now preserves an active Paddle GPU setup during repair and gives clearer status when repair fails instead of making the runtime look uninstalled.
+
+### Highlights
+
+- Fast OCR repair now protects an already-working Paddle GPU runtime from being replaced by CPU fallback.
+- Paddle OCR setup now reports when the runtime is still installed after a failed repair attempt.
+- CPU fallback installation now tries the package source that works for current Paddle CPU wheels before trying Paddle's CPU index.
+
+### Changed
+
+- Changed Paddle OCR repair so an existing GPU-active runtime is not removed before the replacement GPU package is proven usable.
+- Changed Paddle OCR repair so CPU fallback is skipped when it would downgrade an existing GPU-active runtime.
+- Changed Paddle OCR install failure handling to re-check the existing runtime before reporting it as not installed.
+- Changed Paddle CPU fallback install order to try PyPI before Paddle's CPU package index.
+
+---
+
+## v1.2.2
+
+### Summary
+
+This release makes MediaLens safer to repair, reinstall, and move between machines. It adds full library backup and restore tools, gives import and uninstall workflows category-level choices for app data, and improves startup update diagnostics for broken-install recovery.
+
+### Highlights
+
+- Library backup export and import are now available from the File menu.
+- Import can merge or replace supported app-data categories independently, including recycle-bin retention files, thumbnails, downloaded AI models, and AI runtime environments.
+- Uninstall now asks which MediaLens data categories to keep or delete and cleans up unselected app-data files, including legacy leftovers.
+
+### Added
+
+- Added File menu tools to export and import MediaLens library backups.
+- Added backup support for the main database, recycle-bin retention system, settings, thumbnails, downloaded AI models, managed Python, Python bootstrap files, and AI runtime environments.
+- Added timestamped safety backups before library import restores the main database.
+- Added per-category import merge options for recycle-bin retention data, thumbnails, downloaded AI models, and AI runtime environments.
+- Added installer uninstall prompts for database, settings, recycle-bin retention data, thumbnails, AI models, AI runtimes, debug logs, import backups, legacy files, and other app-data.
+- Added startup update diagnostics before the app bridge initializes.
+
+### Changed
+
+- Changed startup update dialogs so they are parented to the splash screen instead of appearing as stray top-level windows.
+- Changed startup update checks to log failures and fall back to the GitHub latest-release API when the raw version check fails.
+- Changed update-check setting synchronization so changes apply immediately.
+- Changed library import so the main database is restored as the selected backup while supported app-data categories can merge or replace independently.
+- Changed interactive uninstall cleanup so app-data files are removed unless the user explicitly selects the matching category to keep.
+
+### Removed
+
+- Removed active carry-forward of old MediaManagerX legacy files from the library backup format.
+
+---
+
+## v1.2.1
+
+### Summary
+
+This release makes MediaLens’ bulk editing tools much more practical for everyday use. Tags, descriptions, and Text OCR now share a polished workflow with per-file and batch editing, generation, review, saving, and responsive layouts that scale to large selections.
+
+### Highlights
+
+- Bulk Editor now brings Tags, Descriptions, and Text OCR together in a single, consistent workspace.
+- Text OCR Review now provides a large image view with side-by-side Fast OCR, AI OCR, and User Typed text, along with clear source confirmation and navigation.
+- Scanner scheduling is more practical with saved folders, configurable intervals, and clearer schedule status.
+
+### Added
+
+- Added a Text OCR tab to the Bulk Editor with per-file No Text, Fast OCR, AI OCR, and Keep actions.
+- Added bulk Text OCR bottom actions for Fast OCR, AI OCR, saving edited OCR text to the database, and clearing OCR text.
+- Added a dedicated Text OCR Review workspace with a large preview image, side-by-side Fast OCR, AI OCR, and User Typed fields, Keep and Generate controls, Previous and Next navigation, status messaging, and close controls.
+- Added No Text actions to both the Bulk OCR rows and the OCR Review workspace.
+- Added visual confirmed-source indicators for OCR Review text fields and Keep buttons.
+- Added bulk list synchronization for OCR Review so previous and next navigation scrolls to the reviewed file and highlights it with the accent color.
+- Added per-file generate buttons below inputs in bulk tag and description rows.
+- Added source folder lists for scheduled scanner runs instead of relying on the current gallery selection.
+- Added scanner schedule options for hourly, daily, weekly, and monthly runs with time and day controls.
+- Added Next Scheduled Run display when scheduling is enabled.
+- Added an OCR action to copy all folders from the list above into the OCR scanner folder list.
+
+### Changed
+
+- Changed the Bulk Editor into a more usable multi-tool workspace with Tags, Descriptions, and Text OCR tabs.
+- Changed bulk selected-file rows to load and resize more reliably across narrow and wide right-panel layouts.
+- Changed bulk tag, description, and OCR rows so thumbnails, inputs, and action buttons align consistently and wrap cleanly at small widths.
+- Changed OCR Review to occupy the main gallery workspace while preserving the existing gallery selection and returning quickly when closed.
+- Changed OCR Keep actions so manually typed edits are saved before the source is confirmed.
+- Changed No Text handling so files leave Text Detected filtered lists after being marked as no text, and OCR Review advances to the next file when appropriate.
+- Changed Select All and bulk editor refresh behavior so large selections with the Tag List and Bulk Editor open no longer trigger the flashing popup-window crash.
+- Changed the scanner page to be scrollable and to keep folder and schedule sections collapsed by default.
+- Changed scanner scheduling so Run in background controls whether the scanner runs, without disabling the schedule and folder controls.
+- Changed scanner status so enabling Run in background reports Scheduled when appropriate.
+- Changed scanner labels and radio options for clearer wording.
+- Changed scanner folder and schedule headers to use SVG disclosure icons and theme-aware styling.
+- Changed Paddle Runtime install and repair access so the install path is kept in the AI Models Status window.
+- Changed Paddle OCR probe failure output so noisy pip/network text is handled more cleanly.
+- Changed several bulk editor and scanner controls to better match MediaLens light/dark theme, accent color, spacing, and SVG icon conventions.
+
+### Removed
+
+- Removed the duplicate Paddle Runtime Install/Repair button from Settings > AI > Text and OCR.
+
+---
+
+## v1.1.37
+
+### Summary
+
+This release makes Paddle OCR setup clearer and more reliable, especially on systems with NVIDIA GPUs. MediaLens now avoids misleading install/status states and gives developers a faster way to test installed-runtime behavior without rebuilding.
+
+### Highlights
+
+- Paddle OCR setup is more transparent about whether GPU is active, CPU fallback is in use, or repair is needed.
+- AI Models status no longer looks like it starts installs while it is only checking runtimes.
+- Source runs now use installed AI runtime paths by default, making Paddle fixes faster to test before packaging.
+
+### Added
+
+- Added installed-build AI runtime path behavior to `python run.py` dev launches.
+- Added a `MEDIALENS_USE_INSTALLED_AI_PATHS=1` switch for source runs that should use AppData AI runtime and model paths.
+
+### Changed
+
+- Changed Paddle OCR installation so PaddleOCR dependency resolution cannot replace the final selected GPU runtime with CPU Paddle.
+- Changed Paddle OCR installation to check and repair pip without upgrading pip itself on every install.
+- Changed Paddle OCR GPU detection to try absolute `nvidia-smi` paths and report the attempted detection failures.
+- Changed Paddle OCR status details to distinguish installing, checking, NVIDIA detected but inactive, valid CPU fallback, and runtime probe errors.
+- Changed Paddle status so CPU-only Paddle on a detected NVIDIA GPU is shown as a repairable GPU error, not a clean install.
+- Changed the Paddle install button on the AI Models status page to wait for install progress signals instead of immediately refreshing back to a not-installed probe result.
+- Changed AI Models status refreshes to show `Checking` instead of `Installing` while probing runtimes.
+- Changed the AI Models status expand and collapse controls to use theme-appropriate SVG arrows instead of text characters.
+- Changed model install status updates so other model rows stay collapsed unless explicitly expanded.
+- Changed the gallery loading message to remove encoded text.
+
+### Removed
+
+- Removed no user-facing features in this release.
+
+---
+
+## v1.1.36
+
+### Summary
+
+This release focuses on startup reliability and a clearer OCR setup experience. MediaLens now avoids a Windows WebEngine startup path that could crash just after the splash screen, while OCR settings and model status are easier to understand and manage.
+
+### Highlights
+
+- Startup is more reliable on affected Windows installs that previously crashed just after the splash screen.
+- OCR setup is easier to review with clearer Fast OCR, AI OCR, and Paddle runtime status.
+- Review workflows now make it faster to generate OCR text and mark files as having no text.
+- Paddle OCR installation now tries multiple GPU package versions first, then falls back to CPU with a clear reason when GPU is unavailable or unusable.
+
+### Added
+
+- Added Paddle OCR to the Local AI Models status dialog with status, progress, install, uninstall, and delete-cache controls.
+- Added OCR scanner scope options for processing either files marked as text detected or all files in scope.
+- Added Fast OCR and AI OCR generate buttons to the OCR review workflow.
+- Added a No Text review action that clears the selected OCR winner and marks the file as no text detected.
+- Added startup diagnostics that log whether MediaLens is using the default or custom WebEngine page.
+
+### Changed
+
+- Changed Windows frozen builds to keep WebEngine's default page during startup, avoiding a native crash path seen on some installed systems.
+- Changed splash startup handling to avoid forcing an immediate Qt event pass before the main window is built.
+- Changed Settings > AI to refresh lazily so opening settings no longer runs expensive status checks for every page up front.
+- Changed OCR settings into clearer Tags, Descriptions, and Text OCR tabs with model status and editable prompts.
+- Changed Paddle OCR status reporting to show whether GPU is actually active instead of only showing the preferred mode.
+- Changed review-window OCR generation to update the OCR cell in place without reloading and re-sorting the review list.
+- Changed file-tree and pinned-folder hidden-state lookups to keep rendering if a database lookup fails instead of allowing a Qt model callback to terminate the app.
+- Changed Paddle OCR installation to try multiple GPU package versions before falling back to CPU with the GPU failure reason.
+- Changed Paddle OCR worker startup so `auto` with GPU preference actually passes the GPU device to PaddleOCR.
+- Changed Paddle OCR status so partial failed runtimes no longer appear as installed, while valid CPU fallback runtimes still do.
+- Changed Paddle CPU fallback to try PyPI if Paddle's CPU package index cannot be reached.
+
+### Removed
+
+- Removed OCR Accurate, leaving Fast OCR through Paddle and AI OCR through Gemma 4.
+
+---
+
+## v1.1.35
+
+### Summary
+
+This release makes duplicate and similar-image review smoother and faster. The comparison panel now opens directly into the right review context, adds practical image-by-image navigation, and bulk editors feel more responsive with large selections.
+
+### Highlights
+
+- The comparison panel now preloads review groups and lets you move through images and groups without leaving the panel.
+- Bulk tag and caption editors open large selections faster by loading thumbnails lazily.
+- Comparison labels now use live file sizes, so equal-size files are no longer shown as largest or smallest winners.
+
+### Added
+
+- Added Previous Image and Next Image controls for both comparison slots when reviewing duplicate or similar groups.
+- Added startup and reopen handling so the comparison panel can preload the current duplicate or similar group when the bottom panel is already open.
+- Added disabled tooltips for comparison navigation buttons so unavailable previous or next actions explain why they cannot run.
+
+### Changed
+
+- Changed comparison group navigation to remember the active review group while the bottom panel is closed and resume there when reopened.
+- Changed duplicate and similar review comparison setup so opening the bottom panel seeds the active group without forcing the panel to reopen after it is closed.
+- Changed comparison navigation button styling, disabled states, cursors, and SVG close icons to better match the rest of MediaLens.
+- Changed comparison file-size ranking to use the live file size on disk instead of stale cached scan data.
+- Changed bulk tag and bulk caption editors to lazy-load thumbnails so selected-file rows render faster.
+- Changed bulk Select All handling to reduce duplicate metadata refresh work and batch selected-file database reads.
+
+### Removed
+
+- Removed stale auto-seeding paths that could force the bottom comparison panel open again after users closed it.
+
+---
+
+## v1.1.34
+
+### Summary
+
+This release makes MediaLens more dependable when working with SVGs, bulk selections, and the details panel. SVG files now behave better across previews and Local AI, while selection and empty-state behavior is cleaner and more predictable.
+
+### Highlights
+
+- SVG files now preview more cleanly and can be used with Local AI tagging through automatically generated preview images.
+- The details panel now clears stale tags, descriptions, and AI fields when nothing is selected.
+- Multi-select behavior is more dependable, including Ctrl-click deselection from an existing selected group.
+
+### Added
+
+- Added SVG poster generation for Local AI so SVG files are analyzed through a raster preview while tags and descriptions still save to the original SVG record.
+
+### Changed
+
+- Changed SVG rendering in the details panel so previews stay sharper when the right sidebar is resized.
+- Changed SVG thumbnails in the bulk tag and caption editors to use high-contrast backgrounds.
+- Changed Ctrl-click gallery selection so clicking an already selected item removes it from the current selection and updates the details panel with the reduced selection.
+- Changed the details-panel empty state so stale tags, descriptions, embedded metadata, and AI fields are cleared and replaced with `Select file(s) to view details.`
+- Changed bulk selected-file rows to guard against deleted Qt objects during teardown and layout updates.
+- Changed corrupted text glyphs in native controls to use SVG icons or source-safe separators instead of fragile encoded characters.
+- Changed `main.py`, `bridge.py`, `web/app.js`, `settings.py`, and the native window code into smaller task-focused modules while preserving the existing app behavior.
+- Changed JavaScript bridge helpers to tolerate missing or non-array values in more gallery and settings flows.
+
+### Removed
+
+- Removed duplicate Qt bridge tooltip slots that caused ambiguous overload warnings in the terminal.
+
+---
+
+## v1.1.33
+
+### Summary
+
+This release makes MediaLens much faster and more practical when working with groups of files. Bulk editing is now more capable, selection stays stable while resizing the panel, and the new caption workflow makes it easier to manage descriptions separately from tags.
+
+### Highlights
+
+- Added a dedicated Bulk Captioning Editor alongside the upgraded Bulk Tag Editor.
+- Bulk editing now shows selected files with thumbnails and per-file editable tag or caption fields.
+- Multi-file gallery selections now stay visually selected while resizing the editor panel.
+
+### Added
+
+- Added a separate Bulk Captioning Editor with its own page, controls, per-file description fields, and View menu entry.
+- Added a mode switch at the top of the Bulk Editor so you can quickly move between bulk tag editing and bulk caption editing.
+- Added compact selected-file cards to bulk editing, including thumbnails and editable per-file fields for the active mode.
+
+### Changed
+
+- Changed the Bulk Tag Editor layout to better support large selections, including a more useful selected-files view and updated bulk generation controls.
+- Changed bulk caption generation to use the existing MediaLens description pipeline while presenting it as captions in the bulk workflow.
+- Changed bulk editor behavior during resize so selected files in the gallery keep their multi-selection state instead of collapsing visually to one file.
+- Changed gallery selection updates with the tag list open to reduce unnecessary tag-list work and improve responsiveness when moving between files.
+
+### Removed
+
+- Removed Common and Uncommon sections, add-to-all input, and tag-list access from the caption workflow where they did not fit description editing.
+
+---
+
+## v1.1.32
+
+### Summary
+
+This release makes Local AI much more reliable in real-world use, especially in installed builds. MediaLens now handles more image formats correctly for Gemma, keeps model selection and status more consistent, and fixes several frustrating Local AI setup and runtime edge cases.
+
+### Highlights
+
+- Gemma 4 is more dependable in the installed app, with several fixes for model selection, runtime launch behavior, and fallback handling.
+- Local AI now handles AVIF, HEIC, HEIF, TIFF, WebP, animated images, and video sources more safely by converting them to preview images before sending them to Gemma.
+- The Local AI setup and status experience is clearer, with improved model syncing, copyable status text, and simpler advanced versus recommended flows.
+
+### Added
+
+- Added stronger Gemma launch diagnostics in worker logs to make installed-build failures easier to trace.
+- Added broader retry and fallback handling for Gemma GGUF launches, including a true CPU-offload fallback path when GPU startup fails.
+- Added more complete Gemma sub-model syncing between settings UI, status views, and active runtime payloads.
+
+### Changed
+
+- Changed Local AI source handling so Gemma uses generated preview images for AVIF, HEIC, HEIF, TIFF, WebP, animated images, and videos instead of sending unsupported originals to llama.cpp.
+- Changed Gemma GGUF launch behavior in installed builds to better isolate subprocess state inherited from the packaged app.
+- Changed Gemma profile selection so the selected downloaded sub-model consistently becomes the active runtime model instead of only updating UI state.
+- Changed Local AI troubleshooting surfaces so important status and error text remains easier to copy and verify.
+- Changed several Local AI model-management flows to behave more predictably when switching between downloaded Gemma variants.
+
+### Removed
+
+- Removed a parser-sensitive tag filter expression that could fail on stricter Python parsing paths.
+
+---
+
+## v1.1.31
+
+### Summary
+
+This release makes Local AI setup much easier to understand and much more practical to use. MediaLens now guides users toward a recommended Gemma 4 setup, makes model switching and downloads easier to manage, and greatly improves local captioning reliability on GPU systems.
+
+### Highlights
+
+- Gemma 4 now supports multiple downloadable model variants, so you can switch between installed versions without uninstalling and reinstalling each time.
+- Local AI setup now has a simpler recommended flow for most users, while still keeping advanced controls available when needed.
+- Gemma 4 descriptions are far more reliable again, with cleaner output and better handling for GGUF and BF16 model variants.
+
+### Added
+
+- Added a simplified Local AI Models onboarding flow with `Use Recommended models` and expandable advanced options.
+- Added downloadable Gemma 4 sub-model management, including installed-model indicators, per-model download and delete actions, and easier switching between downloaded variants.
+- Added recommended Gemma profile selection based on available VRAM, including larger options for high-VRAM GPUs.
+- Added clearer Gemma profile and download progress presentation inside the Local AI Models window.
+
+### Changed
+
+- Changed Gemma 4 local inference from a single fixed Transformers setup to selectable llama.cpp-based model variants, including GGUF and BF16 options.
+- Changed Gemma 4 prompting and cleanup so image descriptions return normal final paragraphs more reliably instead of reasoning or instruction text.
+- Changed Local AI installation to overlap runtime preparation with model downloads for faster setup.
+- Changed AI model status reporting to better distinguish simple user-facing status from advanced technical details.
+- Changed the Settings `AI` page to use a simpler local AI status presentation and a cleaner handoff into the advanced Local AI Models window.
+- Changed Local AI setup, runtime probing, and installer diagnostics to improve GPU detection, validation, and recovery when CUDA-backed runtimes are available.
+- Changed Local AI status and error text surfaces so important messages are selectable and easier to copy when troubleshooting.
+
+### Removed
+
+- Removed older low-level Local AI controls from the main Settings `AI` page that no longer fit the new guided setup flow.
+
+---
+
+## v1.1.30
+
+### Summary
+
+This release makes large folders feel significantly faster and more responsive during scanning. MediaLens now avoids unnecessary work by detecting changes more efficiently, prioritizing visible content, and resuming scans more intelligently.
+
+### Highlights
+
+- Large folders now spend far less time checking for changes before the gallery becomes usable.
+- Visible media is scanned first, so on-screen content loads and updates sooner.
+- Scans resume more gracefully after interruptions, reducing wasted work.
+
+### Added
+
+- Added checkpoint-based scan resume so interrupted scans continue from prior progress instead of restarting.
+
+### Changed
+
+- Reworked scan evaluation to use a single-pass change detection instead of multiple full-folder checks.
+- Optimized change detection by comparing against preloaded in-memory data instead of per-file database queries.
+- Limited deep scanning to only files that actually changed instead of reprocessing entire folders.
+- Prioritized currently visible gallery items during scanning.
+- Switched to thread-local SQLite connections to eliminate cross-thread scanner errors.
+- Improved animated GIF lightbox rendering to avoid CPU-heavy styling that could impact playback.
+
+---
+
+## v1.1.29
+
+### Summary
+
+This release fixes local AI install and preload failures in installed builds. MediaLens now launches each model worker from its own isolated runtime path, skips model downloads when required files are already present, repairs stale InternLM support paths, and reports clearer install errors when a preload really fails.
+
+### Highlights
+
+- Existing local AI model files are now detected before MediaLens tries to download them again.
+- Install can finish cleanly after creating the runtime even when the model files were already present.
+- Local AI workers no longer inherit the packaged app's internal Python package path, preventing installed-build dependency conflicts with per-model virtual environments.
+- InternLM XComposer2 can recover when its local CLIP path was previously patched to an old development model folder.
+- A failed preload/download now includes a clearer process exit code, and no longer leaves a false error if the required model files are confirmed on disk.
+
+### Changed
+
+- Changed local AI model installation to skip the preload/download step when model files are already installed.
+- Changed local AI worker startup to launch direct worker scripts from the model runtime directory instead of importing through the packaged app bundle.
+- Changed local AI install completion to re-check model files after preload failures before reporting an error.
+- Changed InternLM XComposer2 path repair so stale local CLIP paths are replaced with the currently configured model folder.
+- Changed local AI worker failure messages to include Windows exit-code details when available.
+
+---
+
+## v1.1.28
+
+### Summary
+
+This release fixes a local AI setup failure in the v1.1.27 installer. Model installation can now proceed correctly, and setup errors show useful details in the Local AI Models window instead of only showing a generic error.
+
+### Highlights
+
+- Fixed local AI model installs failing immediately with an internal settings error.
+- Local AI Models now shows install progress and error details directly in the setup window.
+- Added a developer-only script to point dev runs and installed runs at the same local AI model folders.
+
+### Added
+
+- Added `scripts/use_installed_local_ai_paths.ps1` for local development machines that should share installed MediaLens AI folders.
+- Added a compact install progress/error message line to the Local AI Models window.
+
+### Changed
+
+- Changed local AI install preload settings so MediaLens copies the selected model into the worker payload instead of mutating immutable settings.
+
+---
+
+## v1.1.27
+
+### Summary
+
+This release makes local AI setup easier to understand and manage. MediaLens now gives clearer model install status, simpler setup wording, and direct install or uninstall controls without exposing backend details users do not need.
+
+### Highlights
+
+- Local AI Models and Status is now available from the View menu whenever you want to check model readiness.
+- Each local AI model now has clearer status, size, purpose, install, and uninstall controls in one dedicated window.
+- The Python bootstrap and model install checks are more reliable, so MediaLens only treats a model as installed when the needed files are actually present.
+
+### Added
+
+- Added an Uninstall action for installed local AI models in the Local AI Models window.
+- Added clearer per-model Description, Size, and Status presentation in the Local AI Models window.
+- Added hand cursors and tighter button sizing for Local AI Models actions.
+
+### Changed
+
+- Changed the Local AI Models window to follow the app's light or dark theme and accent color more closely.
+- Changed installed model status to use a simple checkmark label instead of a bordered badge that looked too much like a button.
+- Changed AI Settings to show simpler local AI model status and hide model size there, leaving size details in the Local AI Models window.
+- Changed the Python bootstrap install path to use a verified NuGet Python package for more predictable first-run model setup.
+- Changed model readiness checks so a runtime alone is not enough; required model files must also be present before the model appears installed.
+
+### Removed
+
+- Removed technical runtime, backend, and model-location wording from the user-facing AI setup surfaces.
+
+---
+
+## v1.1.26
+
+### Summary
+
+This release makes local AI model support much more dependable and flexible. MediaLens now isolates each AI model in its own worker process and runtime, so adding or testing new models is less likely to break models that already work.
+
+### Highlights
+
+- Gemma 4, InternLM XComposer2, and WD SwinV2 can now work side by side without sharing fragile dependency stacks.
+- Description prompts now behave more naturally, with tags and starter text included only through prompt instructions instead of being forced onto the final response.
+- Local AI failures and long-running generation are handled more clearly, with safer subprocess cleanup when the app closes.
+
+### Added
+
+- Added Gemma 4 E2B Instruct as an optional local AI model for tags and descriptions.
+- Added a local AI model registry so each model can define its own worker module, runtime folder, and user-facing dropdown label.
+- Added separate worker subprocess entry points for WD SwinV2 tag generation and InternLM XComposer2 description generation.
+- Added separate optional dependency files for WD SwinV2, InternLM XComposer2, and Gemma 4 runtimes.
+- Added AI settings status for the selected tag and description models, including an install action when the model runtime is missing.
+- Added a Local AI Models setup dialog that appears after installing or updating MediaLens and shows install status for each optional model runtime.
+- Added a managed Python bootstrap for local AI model installs so MediaLens can create per-model runtimes without requiring users to install Python themselves.
+- Added clearer local AI model download size estimates based on the actual model files and major runtime packages.
+- Added a View menu action to open Local AI Models and Status at any time.
+- Added `{starter}` support for description prompts so users can place the starter text exactly where they want it.
+
+### Changed
+
+- Changed local AI execution so each model can run in its own virtual environment instead of sharing one dependency set.
+- Changed installed builds to store optional local AI runtimes under `%APPDATA%\MediaLens\ai-runtimes` instead of the app install folder.
+- Changed Generate Tags and Generate Description to open Local AI Models setup when the selected model runtime is not installed.
+- Changed AI Settings model status details into separate Description, Size, Status, and Location rows.
+- Changed description prompt handling so `{tags}` is opt-in; tags are only inserted when the prompt includes the `{tags}` placeholder.
+- Changed `Start Description With` so it is passed to the model as an instruction instead of being prepended to the generated response.
+- Changed InternLM XComposer2 loading back to the working legacy path after the Gemma integration work showed it requires a different runtime approach.
+- Changed local AI progress and error handling to give clearer in-app updates during long-running generation and failures.
+- Changed app shutdown handling so active local AI worker subprocesses are canceled and terminated more safely.
+
+---
+
+## v1.1.25
+
+### Summary
+
+This release introduces local AI-powered tagging and description generation directly into MediaLens, turning your library into something you can understand, search, and organize automatically. It also improves gallery stability and behavior during everyday workflows, making browsing, sorting, and cleanup feel more consistent and reliable.
+
+### Highlights
+
+- Local AI can now generate tags and descriptions into the MediaLens database, with separate controls for each workflow.
+- Randomized galleries now keep the same session order after refreshes, deletes, hides, and metadata updates.
+- Masonry view is more reliable when deleting, hiding, and displaying older JPG files with EXIF orientation.
+
+### Added
+
+- Added local AI tag generation using the local WD SwinV2 tagger model.
+- Added local AI description generation that uses existing tags as context, producing more accurate and relevant descriptions.
+- Added separate Generate Tags and Generate Description actions in the Details panel.
+- Added AI settings groups for Tags and Descriptions, with separate prompts and generation settings for each workflow.
+- Added Union Merge as the default tag write mode so generated tags append without duplicates.
+- Added a scrollable multiline Tags editor in the Details panel.
+
+### Changed
+
+- Changed random sorting to assign each media path a session-stable random rank that resets only when the app starts or randomize is enabled again.
+- Changed delete and hide handling in masonry view to return near the previous scroll position instead of jumping to the top.
+- Changed masonry sizing to account for JPG EXIF orientation when reading image dimensions.
+- Changed gallery refreshes to skip unnecessary DOM rebuilds when the visible gallery signature has not changed, reducing fast flashes during background updates.
+- Changed lightbox video rendering to reduce expensive per-frame styling and improve playback performance.
+- Changed AI prompt inputs in Settings to match the same input styling as the rest of the settings controls.
+
+---
+
+## v1.1.24
+
+### Summary
+
+This release fixes inconsistent Text Detection behavior and makes gallery filtering far more trustworthy and predictable. Manual scanner runs now perform real rescans, filters react instantly to overrides, and navigation controls feel more polished.
+
+### Highlights
+
+- Text Detection filters no longer treat weak text_likely signals as final results, relying instead on stronger and verified detection signals.
+- Running Text Detection from Settings now performs a real rescan instead of finishing instantly from cached values.
+- Gallery controls now behave more naturally, with pagination returning to the top and filter dropdowns collapsing when you click away.
+
+### Added
+
+- Added new SVG-based override switches for Text Detection and AI Detection, with clear on/off states across light and dark modes.
+
+### Changed
+
+- Changed effective Text Detection status to use manual overrides, verified text, and stronger text-detection signals instead of treating `text_likely` as source of truth.
+- Changed Settings > Scanners > Text Detection > Run Now to rescan existing files and clear stale stronger auto text signals when rebuilding results.
+- Changed Text Detection and OCR scanner eligibility so `text_likely` remains only a weak candidate signal, not a final positive result.
+- Changed gallery refresh behavior so Text Detection and AI Detection manual override toggles immediately update active Text Detected, No Text Detected, AI, and Non-AI filters.
+- Changed pagination so navigating to a different page scrolls the gallery back to the top.
+- Changed the Filter By dropdown so it collapses when clicking or focusing outside of it.
+- Changed text-filter scanning behavior to avoid the results/no-results blinking loop when filtering by Text Detected or No Text Detected.
+
+---
+
+## v1.1.23
+
+### Summary
+
+This release adds manual OCR text extraction, searchable detected text, and a new Scanners settings category, giving you much more control over text-related metadata tasks. With manual overrides, editable detected text, and background scanner controls, MediaLens makes it easier to find and manage media based on visible text.
+
+### Highlights
+
+- Manual OCR extraction lets you pull real text from images and videos on demand, then review or refine it in the Details panel.
+- New Scanners settings provide visibility and control over background Text Detection and OCR schedules.
+- Detected Text is now a searchable field in both search and the guided query builder.
+
+### Added
+
+- Added a Scanners settings category that shows real-time status, last-run times, and configurable intervals for background OCR and Text Detection.
+- Added Run Now buttons and enable/disable toggles for each scanner service.
+- Added a manual OCR button in the Details panel to trigger instant text extraction for the selected file.
+- Added OCR support for video files using the existing preview image.
+- Added an editable Detected Text field in the metadata panel with Save to DB support for manual corrections.
+- Added Detected Text as a searchable field in the Advanced Search guided builder.
+- Added manual override toggle buttons for Text / No Text and AI / Non-AI file classification.
+
+---
+
+## v1.1.22
+
+### Summary
+
+This release makes MediaLens more dependable when installing updates and playing videos in the lightbox. Update prompts now appear before the main window opens, while legacy install and app-data cleanup reduce confusion from old shortcuts and folders.
+
+### Highlights
+
+- Update prompts now appear earlier at startup, giving MediaLens a better chance to patch a broken build before the main app loads.
+- Lightbox video playback is smoother after reducing expensive background and WebEngine rendering work.
+- Installer cleanup now migrates legacy app data into `%APPDATA%\MediaLens\` and removes stale legacy shortcuts and folders.
+
+### Changed
+
+- Moved the update check to the earliest startup point and replaced the web toast update prompt with a native dialog.
+- Changed lightbox video styling to avoid WebEngine paths that can force video rendering onto the CPU.
+- Changed the gallery overflow behavior to prevent rare horizontal scrollbar flicker during resize.
+- Changed installer migration to merge legacy app data into `%APPDATA%\MediaLens\`, remove old branded app-data folders after migration, and clean stale legacy shortcuts/install folders.
+
+### Fixed
+
+- Fixed stale current-user taskbar shortcuts that could continue opening an older legacy install after updating.
+
+---
+
+## v1.1.21
+
+### Summary
+
+This release improves overall UI polish, tag management, and playback performance. The tag workflow is smoother with better dropdowns and database handling, while the details panel and image comparison view are more polished and responsive. Video playback in the lightbox is also more stable with background tasks pausing automatically.
+
+### Highlights
+
+- Tag management is now smoother with the ability to hide list panels, improved dropdowns, and database entries that preserve capitalization.
+- The Details panel and Image Comparison view feel more polished with smoother resizing, aligned buttons, and consistent margins.
+- Video playback in the lightbox performs more consistently because it now automatically pauses background scanners and animated gifs.
+
+### Added
+
+- Added the ability to hide Tag lists to keep the workspace tidy.
+
+### Changed
+
+- Restyled the Tag Lists dropdown and updated the empty state UI when no lists exist.
+- Changed tag database handling to preserve capitalization while intelligently ignoring duplicates with different capitalization.
+- Changed Details panel resizing logic to a single shared calculation, keeping buttons and text inputs smoothly aligned while drag-resizing.
+- Adjusted margins and padding in the Image Comparison panel for a cleaner look.
+- Replaced the comparison close buttons with a symmetrical SVG icon featuring more consistent colors and hover effects.
+- Improved lightbox video playback performance by automatically pausing background scanners and animated gifs while a video is playing.
+
+### Fixed
+
+- Fixed tag creation so adding a new tag from the list creates a database entry immediately even if scanning hasn't processed it yet.
+- Fixed tag counts to correctly update when showing or hiding nested files and hidden files.
+
+---
+
+## v1.1.20
 
 ### Summary
 
