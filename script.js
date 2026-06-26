@@ -44,19 +44,27 @@ const screenCaption = document.querySelector("#screen-caption");
 const screenButtons = document.querySelectorAll("[data-screen]");
 
 screenButtons.forEach((button) => {
+  button.setAttribute("aria-selected", button.classList.contains("active") ? "true" : "false");
+
   button.addEventListener("click", () => {
-    screenButtons.forEach((item) => item.classList.remove("active"));
+    screenButtons.forEach((item) => {
+      item.classList.remove("active");
+      item.setAttribute("aria-selected", "false");
+    });
     button.classList.add("active");
+    button.setAttribute("aria-selected", "true");
 
     screenImage.style.opacity = "0";
     window.setTimeout(() => {
       screenImage.src = button.dataset.screen;
       screenCaption.textContent = button.dataset.caption;
-      screenImage.style.opacity = "1";
     }, 140);
   });
 });
 
 if (screenImage) {
   screenImage.style.transition = "opacity 180ms ease";
+  screenImage.addEventListener("load", () => {
+    screenImage.style.opacity = "1";
+  });
 }

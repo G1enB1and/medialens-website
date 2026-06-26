@@ -1,6 +1,676 @@
 # Change Log
 
-## v1.2.10 (Current)
+## v1.4.6 (Current)
+
+### Summary
+
+This release is a broad polish and stability update across MediaLens, led by a much faster and more capable Image Editor. It also improves Settings, Bulk Editor refresh behavior, Action History stability, and native UI consistency so everyday workflows feel steadier across the app.
+
+### Highlights
+
+- Edit faster with accelerated blur, live brush strokes, drag-based Magic Wand selection, marching-ants outlines, and a new Lasso selection option.
+- Work with text more reliably using scalable font handling, resizable on-canvas bounds, better toolbar size changes, remembered font choice, and improved zoom alignment.
+- Use a cleaner native interface with more consistent Settings controls, better editor dropdowns, fixed Bulk Editor combo behavior, and steadier Action History row interaction.
+
+### Added
+
+- Added accelerated image-processing paths for Image Editor blur, brush, eraser, and Magic Wand operations using reusable NumPy and optional OpenCV-backed processing where available.
+- Added live brush and eraser application during drag gestures so strokes are applied immediately instead of waiting for a delayed final pass.
+- Added Photoshop-style Magic Wand drag sampling, selection-tool sizing, circle cursor feedback, and forced selection within the wand cursor size.
+- Added animated marching-ants outlines for selection masks across selection tools.
+- Added a Lasso selection tool with path-based selection support.
+- Added add and subtract cursor markers for selection tools so the active selection mode is visible at the cursor.
+- Added a live brush-tip preview that reflects opacity and edge softness values.
+- Added direct on-canvas text transform bounds with move and resize handles for active text layers.
+- Added safer font handling for text layers by blocking the problematic 8514oem font, normalizing legacy layers to scalable fonts, and remembering the last selected text font across sessions.
+- Added a 1px grey border around Image Editor layer preview thumbnails.
+- Added new Image Editor brush, eraser, fill, and text-alignment SVG assets, including dark-mode variants where needed.
+- Added regression coverage for Image Editor live brush painting, Magic Wand dragging, selection outlines, text sizing, text bounds, font handling, toolbar focus behavior, and zoom-specific text overlay alignment.
+- Added native Action History safeguards so dynamically created detail widgets and lower-table row clicks stay parented and routed correctly.
+
+### Changed
+
+- Changed Magic Wand selection cleanup so selected areas form more closed, filled regions instead of loose tolerance-only pixel islands.
+- Changed the Magic Wand drag experience by removing the accented preview path line and using the selection outline itself as the main feedback.
+- Changed Image Editor text sizing to render and measure with pixel-sized fonts so toolbar size values visibly scale text layers more predictably.
+- Changed Image Editor text toolbar edits to target the intended text layer even when focus or active-layer state changes during editing.
+- Changed Image Editor text selection behavior so toolbar edits preserve the previous highlighted or unhighlighted live text state instead of forcing a new state.
+- Changed Image Editor text bounds so the editable transform box has more usable padding and aligns correctly across zoom levels.
+- Changed Image Editor text color handling so the text tool follows the shared foreground color picker like the brush and fill tools.
+- Changed live Image Editor brush, eraser, and Magic Wand interactions to avoid unnecessary full preview and UI refreshes during drag operations, cache selection overlays, and keep editing responsive even on large images.
+- Changed Image Editor font and combo controls to use the shared themed combo path with fixed-height controls, predictable popup height, stable row sizing, and better closed-control alignment.
+- Changed Image Editor alignment controls to use themed SVG menu buttons with corrected light and dark mode rendering.
+- Changed Settings controls to use shared themed combos, spin boxes, buttons, tabs, and text inputs more consistently across light and dark mode.
+- Changed Settings tab geometry, AI page tabs, Background Processes tabs, and scanner/OCR control styling so native settings pages align more consistently and avoid clipped or disconnected tab chrome.
+- Changed shared native control heights and spacing so settings, editor toolbar controls, buttons, combos, line edits, and numeric inputs align more consistently.
+- Changed Bulk Editor metadata settings so visibility changes made in Settings refresh live without requiring deselecting and reselecting files.
+- Changed bulk metadata and bulk rename dropdowns back to the single-chevron custom combo path so duplicate arrows do not return.
+- Changed Action History details so normal row clicks no longer fall through embedded action-cell widgets or create transient popup windows.
+- Changed Image Editor opening from large gallery selections to prefer the current file and avoid expensive selection scanning.
+
+### Removed
+
+- Removed obsolete Image Editor text editing paths that could create phantom boxes, stale geometry, or unreliable resize behavior.
+- Removed the old Magic Wand drag path preview line in favor of the cleaner selection-outline feedback.
+
+---
+
+## v1.4.5
+
+### Summary
+
+This release makes MediaLens much better at recognizing near-identical images with color filters or color shifts, while also tightening People review, bulk editing, and comparison behavior so labels and navigation stay more predictable.
+
+### Highlights
+
+- Detect filtered, recolored, and color-shifted versions of the same image more reliably in Similar Files.
+- Review similar and duplicate groups with more trustworthy guidance thanks to smarter Best Overall handling that backs off when MediaLens cannot safely auto-pick a winner.
+- Move through People galleries more smoothly with better review fallbacks, safer navigation behavior, improved bulk-tab persistence, and cleaner face-focused profile crops.
+
+### Added
+
+- Added colorhash-based color-shift detection so Similar Files can better group images that match structurally but differ mainly by applied color filters.
+- Added a Color Shifted Pairs preference rule under Settings > Similar File Rules with Keep Both and Keep Newest options, defaulting to Keep Both.
+- Added action-history-backed edited-image labeling so similar groups can identify MediaLens-edited files and use stronger original-versus-edited hints when provenance is reliable.
+
+### Changed
+
+- Changed Similar Files grouping at high and very high thresholds to stop missing close matches because of overly restrictive prefix bucketing.
+- Changed similar-group labels to distinguish color-shifted matches more clearly and downgrade weak pixel-only matches to a neutral Color-shifted pair label when edit provenance is not strong enough.
+- Changed duplicate and similar review auto-resolution so Best Overall is suppressed when keep-both rules apply or when MediaLens does not automatically mark any item for deletion.
+- Changed the bottom comparison panel to follow the same no-best logic as the review gallery so color-shifted and other keep-both pairs no longer show a conflicting Best in Comparison label.
+- Changed People card review entry behavior to open Review All automatically when Review Unconfirmed has nothing left to review.
+- Changed People bulk-editor tab behavior so file-backed People views keep the last used tab across Review and Show All transitions, while the top-level People Gallery still stays locked to the People-only workflow where file tabs are not applicable.
+- Changed People header navigation controls to avoid unpredictable folder-history behavior while People galleries or People review surfaces are active.
+- Changed People profile-circle face crops and unnamed-face review thumbnails to use a gentler face zoom that keeps a bit more of the image in frame.
+- Changed image-editor opening from gallery selections to prefer the current file and avoid expensive large-selection scanning that could stall the UI.
+
+---
+
+## v1.4.4
+
+### Summary
+
+This release expands MediaLens People workflows with a more complete gallery and review experience, stronger bulk editing, improved duplicate-face handling, and more polished People-specific controls throughout the app.
+
+### Highlights
+
+- Review one person across every image they appear in with new Show All, Review All, and Review Unconfirmed modes, plus faster bulk editing that stays centered on the People tab while still unlocking the other bulk tools when files are in scope.
+- Manage people more directly with cleaner person-only context menus, a themed Manage dialog, custom profile pictures, hidden people and hidden groups, and better People-gallery status and navigation controls.
+- Eliminate repeated cloned face entries across People review, bulk People summaries, and single-image People details by deduplicating duplicate face records at the shared data layer.
+
+### Added
+
+- Added Show All, Review All, and Review Unconfirmed person-gallery modes with sticky header controls for switching between People review states.
+- Added a themed Manage dialog for People cards and person review headers with rename, group, favorite, ignore, visibility, and profile-picture actions.
+- Added support for custom People profile pictures with built-in profile image switching controls.
+- Added hide and show support for individual people and custom People groups, including filtering that respects the existing Show Hidden setting.
+- Added a sticky header close button in person review views that returns directly to the normal gallery.
+- Added a sticky People Gallery header with All, Unnamed, and Unconfirmed tabs, plus Scan for Faces and close controls that keep People navigation available without relying on the main header control.
+- Added a People Show All folder-scope toggle so person-specific normal-gallery results can either use the person's complete image set or be limited to the current folder when needed.
+
+### Changed
+
+- Changed the header People control from a dropdown into a direct People button with inactive gray icon styling and active light or dark mode icons.
+- Changed People Show All to use the normal gallery renderer and the user’s current gallery view, such as Masonry or Grid, instead of custom People face cards with bounding boxes.
+- Changed People Show All scoping to use exact person-id filtering and a People-derived image scope by default, so results do not disappear when the current folder does not contain that person’s images.
+- Changed People Show All refresh behavior so paging, infinite scroll, lightbox page changes, view changes, filters, sorting, and metadata-sensitive refreshes preserve the active person scope.
+- Changed live search to render the first matching batch quickly and continue loading additional matching batches in the background for better responsiveness in large galleries.
+- Changed People review and Show All bulk selection so the same bulk People editor used by the main People gallery opens by default, auto-loads the relevant files, and still allows switching to metadata, tags, OCR, captions, and rename tabs when files are selected.
+- Changed People review bulk counts so the People section stays scoped to the currently selected files instead of the full person group.
+- Changed People review galleries and related summaries to automatically deduplicate repeated face detections, preventing duplicate cards, inflated counts, and repeated names.
+- Changed People card actions, person review context menus, and person-gallery header controls to focus on person workflows instead of generic image actions.
+- Changed People card styling with circular profile images, a hover-only profile-picture switcher, stronger accent-aware hover states, and bolded person names.
+- Changed People review presentation so Show All and review modes are separated cleanly, Confirm All hides when it is not relevant, and Review Unconfirmed hides when a person has nothing left to review.
+- Changed the People gallery footer count chip to show named and unnamed people totals instead of a misleading file count.
+- Changed the Include Nested Files header toggle to use the new custom file-tree SVG icon set.
+
+### Removed
+
+- Removed generic image-focused actions from People card context menus and person-group review menus where those actions did not match People workflows.
+
+---
+
+## v1.4.3
+
+### Summary
+
+This release refines the new MediaLens People workflows with stronger bulk-review behavior, better deduplication, per-person group management, and much better responsiveness when reviewing people with large image sets.
+
+### Highlights
+
+- Review people from the Bulk Editor more reliably with deduplicated face cards, cleaner per-image summaries, and counts that stay scoped to the files you are actually working on.
+- Work through large people libraries more smoothly thanks to async loading, lazy thumbnail updates, cached people-per-image mappings, and better default splitter behavior.
+- Manage group membership directly from each detected person card in the bulk People editor using the same custom typed dropdown workflow as People naming and renaming.
+- Use a more polished bulk People image list with improved layout, clearer People summaries, per-image Ignore, and better thumbnail and button behavior in both wide and narrow panel sizes.
+- Keep Review People, bulk People, and per-image summaries in sync with matching deduplication logic so duplicate bridge rows no longer create repeated cards or repeated names.
+
+### Added
+
+- Added per-person Rename and Ignore actions plus a collapsible Groups section to bulk People detected cards, including per-group remove actions and a custom typed Add to Group workflow.
+- Added Ignore Unnamed support to the bulk People detected section when unnamed detections are present.
+- Added per-image Ignore actions to bulk People selected-image cards alongside Scan for People and Review.
+- Added context-aware bulk People image-source labeling so person-driven workflows clearly show image sets such as Images Containing Amy Rollins.
+
+### Changed
+
+- Changed single-person People Gallery selection to open the bulk People workflow, auto-populate Selected Images from that person or face selection, and reuse scoped caches for faster review setup.
+- Changed bulk People image rows to use a more compact layout with People summaries, responsive button placement, and taller thumbnails aligned to the action stack.
+- Changed bulk People selected-image summaries to show the full deduplicated People list for each image so the image list stays consistent with Review People.
+- Changed Review People and related People surfaces to deduplicate repeated face records using face identifiers and bounding-box signatures so identical people no longer appear multiple times.
+- Changed bulk People loading to populate large image sets asynchronously in batches, lazy-load visible thumbnails on scroll, and recenter the splitter when a new People context opens unless the user already resized it.
+- Changed the bulk People bottom section label from Detected People to People for clearer wording across load states and refreshes.
+
+### Removed
+
+- Removed the old shared bulk People footer group actions in favor of per-person group controls inside each detected person card.
+
+---
+
+## v1.4.2
+
+### Summary
+
+This release significantly expands MediaLens People workflows with a redesigned Review People experience, broader bulk editing capabilities, and a shared naming system that makes organizing faces faster and more reliable.
+
+### Highlights
+
+- Review everyone found in one image from a dedicated Review People workspace with bounding boxes, face actions, and image-to-image navigation.
+- Manage detected people directly from normal image selections in the Bulk Editor, including scan, rename, ignore, and group-management workflows scoped to the files you selected.
+- Name and rename people anywhere in MediaLens using a shared picker that combines typing, dropdown selection, autocomplete suggestions, and Tab completion.
+- Use more consistent People buttons, dropdowns, hover states, and accent styling across review panels, bulk editing, and details views.
+- Review, name, confirm, ignore, and organize faces much faster thanks to a redesigned workflow that keeps everything in context without jumping between dialogs.
+
+### Added
+
+- Added a dedicated Review People workspace for single-image face review with pan and zoom preview, bounding-box overlays, label toggles, per-face actions, and Previous and Next navigation tied to bulk-selected images.
+- Added bulk People support for normal image selections with a Selected Images review list, per-file Review and Scan for People actions, Scan All for People, and detected-people actions scoped only to the selected files.
+- Added collapsible Selected Images and Detected People sections in the bulk People editor, including a persistent draggable splitter between them.
+- Added per-person Rename and Ignore actions in the bulk People detected list plus Ignore Unnamed support when unnamed detections are present.
+- Added a shared People name picker used throughout MediaLens with direct typing, known-name dropdowns, autocomplete suggestions, and Tab completion for faster naming workflows.
+- Added per-group Remove from Group buttons on People cards and expanded multi-select support across People gallery, unconfirmed, and unnamed views.
+
+### Changed
+
+- Changed Review Faces in the details panel to open the native Review People workspace instead of a one-name popup so multiple faces in one image can be reviewed in context.
+- Changed single-file and bulk People workflows to treat generated "Unnamed" identities consistently, ensuring the correct naming, ignore, and not-person actions are always available.
+- Changed People scan refresh behavior so details, Review People, and bulk People views all update immediately after a scan completes.
+- Changed bulk People counts, actions, and summaries to stay scoped to the currently selected files instead of the full People library.
+- Changed People controls across details, bulk, and review surfaces to use the shared MediaLens themed button system, custom dropdown styling, accent-aware hover states, and light or dark mode contrast rules more consistently.
+- Changed Review People face cards, separators, labels, and overlays for better contrast, cleaner spacing, stronger accent usage, and more predictable empty and no-scan states.
+- Changed drag-preview behavior so drag overlays remain inside the MediaLens window for a more integrated experience.
+
+### Removed
+
+- Removed the old single-name Review Faces popup workflow from single-image People review.
+
+---
+
+## v1.4.1
+
+### Summary
+
+This release continues polishing the Image Editor toward a professional Photoshop-inspired editing experience while improving performance, consistency, and overall usability across nearly every editing workflow.
+
+### Highlights
+
+- Use the Image Editor with traditional desktop-style menus that no longer overlap or leave detached dropdowns behind.
+- Adjust layer opacity and other editor values faster with unified drag, typing, and mouse-wheel numeric controls throughout the editor.
+- Paint with smoother brush strokes, improved soft-edge behavior, and cleaner editor-only menus that stay focused on editing workflows.
+- Edit text directly on the canvas with reopenable text layers, themed font selection, and improved live text-edit behavior that feels closer to a traditional raster editor.
+- Work with a more polished Photoshop-inspired editor featuring rulers, foreground and background color wells, stronger active-tool highlighting, refined Layers controls, and clearer dirty-document feedback.
+- Open Image Editor dialogs and filter popups with consistent theming, dedicated per-filter workflows, async filter processing, and faster preview behavior on larger images.
+
+### Added
+
+- Added reusable inline numeric controls across the Image Editor toolbar with direct typing, horizontal drag adjustment, and mouse-wheel support.
+- Added expanded automated test coverage for Image Editor menu visibility and shared numeric input behavior.
+- Added direct on-canvas text editing with support for reopening existing text layers instead of always creating new ones.
+- Added a themed font picker for text layers with corrected preview sizing, accent-aware selection styling, and themed popup scrollbars.
+- Added Photoshop-style foreground and background color wells with a dedicated swap control and shared editor color state for paint and fill tools.
+- Added Photoshop-style rulers with a View menu toggle and improved cursor or document context readouts.
+- Added expanded blend-mode support, persistent layer masks, improved compositing, unrestricted layer movement, and softer hardness-aware brush rendering within the editor document model.
+- Added dedicated editor-only Selection, Layers, Image, and Filter menu workflows with popup dialogs for image sizing, layer properties, and filter operations.
+- Added shared themed editor dialog controls for rename, layer properties, crop, resize, and filter windows with custom dropdowns, drag-wheel numeric inputs, and accent-aware checkbox styling.
+- Added async filter preview and apply execution so expensive filter work runs off the main UI thread with safer stale-preview handling.
+
+### Changed
+
+- Changed top-level Image Editor menu visibility handling to use proper menubar behavior instead of popup-style widgets.
+- Changed Image Editor menu behavior so only one top-level menu can be active at a time, preventing overlapping or detached menus.
+- Changed Image Editor Edit and View menus to hide gallery-only actions while editing, keeping bulk editors, People review actions, gallery views, and unrelated panel toggles out of the editing workspace.
+- Changed View > Show Right Panel in the Image Editor to correctly control the shared right panel when it is being used as the Layers panel.
+- Changed brush and paint option controls to use the same inline numeric editing style as layer opacity for more consistent interactions.
+- Changed brush hardness response and stroke interpolation so softer brushes produce more natural falloff and smoother curved strokes.
+- Changed filter and image-size controls to remain in menus and dialogs instead of crowding the editor toolbars.
+- Changed text editing from a separate apply-style flow to direct on-canvas editing with hidden underlying text-layer rendering during live edits, reopen support, and better initialization for new text layers.
+- Changed dirty-document feedback in editor tabs to use a clearer high-contrast accent indicator beside the close control.
+- Changed the editor toolbar chrome with clearer active-tool highlighting and better foreground or background color control placement and theming.
+- Changed the Layers panel layout, tabs rail, row sizing, visibility controls, blend-mode chrome, top opacity controls, and drag-reorder behavior to better match the intended Photoshop-style editing model.
+- Changed the layer opacity field from a spinbox to the shared scrub-type numeric control and applied the same editing model across brush, text, fill, filter, adjustment, and resize controls.
+- Changed image editor font, blend-mode, selection-shape, fill-mode, and filter dialogs to standardize on themed custom combo boxes instead of stock Qt dropdowns.
+- Changed filter dialogs so each menu action opens a dedicated filter workflow, shows immediately before preview work starts, and reports processing status inside the dialog.
+- Changed filter preview and apply handling to run asynchronously, discard stale results safely, and avoid cloning the full layered document when only the active layer preview is needed.
+- Changed canvas redraw behavior to cache composited editor output between invalidations and changed large filter previews to use downscaled proxy rendering for better responsiveness.
+- Changed Image Editor runtime behavior to better tolerate lightweight shells and testing environments, preventing regressions when bridge settings are unavailable.
+
+### Removed
+
+- Removed gallery-only View modes and non-editor Edit menu actions from the Image Editor workspace.
+
+---
+
+## v1.4.0
+
+### Summary
+
+This release introduces the first beta of the new MediaLens Image Editor, bringing a Photoshop-inspired layered raster editing workspace directly into MediaLens. Crop, resize, paint, text, filters, adjustment layers, selection, project saving, and undo are now integrated into the existing media workflow.
+
+### Highlights
+
+- Open the new Image Editor directly inside MediaLens with layered editing, a Photoshop-style workspace, and document tabs.
+- Edit images with crop, resize, selections, paint tools, text layers, fills, gradients, filters, and non-destructive adjustment layers without leaving MediaLens.
+- Save layered work to the new `.mlimage` project format or export flattened images back to standard image files.
+- Undo saved image overwrites more safely with dedicated image-edit retention and `Image Edited` Action History support.
+
+### Added
+
+- Added a new beta Image Editor mode with direct `Edit Image` entry points from the main Edit menu and image context menus.
+- Added an image editor workspace with a left tool rail, top options ribbon, central canvas, right Layers panel, document tabs, and bottom status bar.
+- Added layer-based editing with active layer selection, reordering, renaming, duplication, visibility, opacity, and flattened image export.
+- Added interactive crop and resize workflows with on-canvas crop handles, top-bar resize controls, aspect-ratio lock, and editor-only undo support.
+- Added rectangle, oval, lasso, and magic-wand selection tools with replace, add, subtract, tolerance, and crop or resize-aware selection-mask behavior.
+- Added Brush, Eraser, Fill, and Gradient tools with active-layer editing, selection-aware behavior, brush preview, and foreground/background color controls.
+- Added editable text layers with direct on-canvas text entry, later re-editing, font family selection, text sizing, text width controls, and themed text highlight styling.
+- Added Gaussian Blur, Bokeh Blur, and initial color-look filters with live preview support.
+- Added editable non-destructive filter layers and adjustment layers for brightness, contrast, saturation, hue, temperature, tint, Levels, and Color Balance.
+- Added a new `.mlimage` layered project format with project save and reopen support for layers, text, selections, filters, adjustments, and editor metadata.
+- Added dedicated image-edit retention support and saved-edit `Image Edited` Action History entries so overwritten images can be restored after save.
+- Added focused automated tests and offscreen editor runtime QA coverage for editor workflows, project round-tripping, filter preview behavior, and core editing interactions.
+
+### Changed
+
+- Expanded MediaLens beyond organization and review workflows by adding integrated in-app image editing.
+- Changed editor menus, layer controls, blend mode presentation, rulers, status UI, dirty-document indicators, and toolbar styling to follow a more polished Photoshop-inspired editing model.
+- Changed text editing behavior from a separate apply flow to direct on-canvas editing with better live preview, layer reopening, and themed font selection.
+- Changed filter and adjustment workflows so MediaLens can support both destructive edits and more reusable non-destructive layer-based editing paths.
+- Changed image-save handling so editor saves, Save As operations, and project saves use editor-specific routing instead of the regular gallery open and save flow.
+
+---
+
+## v1.3.5
+
+### Summary
+
+This release finishes a major round of Lightbox refinement. MediaLens now gives the slideshow player proper looping across paginated galleries, clearer playback controls, more stable fullscreen behavior, and more predictable control placement for both images and videos.
+
+### Highlights
+
+- Let Lightbox slideshows keep going across paginated galleries instead of stopping at the current page.
+- Control slideshow looping directly from both Settings and a new shortcut, while keeping image, GIF, and video playback in one smoother flow.
+- Use fixed-position Lightbox controls that no longer jump around as different media sizes load.
+- Read video playback controls more clearly with distinct slideshow and video play or pause pills, plus better top-row layout in the native video overlay.
+
+### Added
+
+- Added a new `Settings > Player > Loop slideshow` setting, enabled by default.
+- Added a new `Settings > Hotkey Shortcuts` entry for toggling slideshow loop with `Ctrl+L`.
+- Added dedicated dark-theme `slideshow` and `video` SVG assets for the new native Lightbox playback pills.
+
+### Changed
+
+- Changed timed Lightbox slideshow playback to advance across paginated galleries, skip unsupported files between pages, and loop through the full result set instead of only the current page.
+- Changed manual Lightbox next navigation to follow the same paginated cross-page behavior as autoplay slideshow advance.
+- Changed Lightbox control anchoring so image, GIF, and video navigation buttons stay fixed to the viewer area instead of shifting with each file's rendered size.
+- Changed image and GIF slideshow controls to match the native video slideshow pill styling while keeping the separate video play or pause control video-only.
+- Changed native Lightbox video controls so slideshow, video play or pause, and mute or volume now sit together in a clearer top-left control row.
+- Changed Lightbox playback pills and native mute or volume controls to use a squarer rounded-rectangle shape that better matches the rest of the viewer chrome.
+- Changed native Lightbox video pointer activity handling so moving the mouse anywhere in the Lightbox, including outside the rendered video, can reveal controls again.
+
+---
+
+## v1.3.4
+
+### Summary
+
+This release overhauls the Lightbox viewing experience for images, GIFs, and videos. MediaLens now delivers a more unified slideshow workflow, cleaner controls, better theme behavior, more reliable mixed-media playback, dedicated fullscreen Lightbox mode that stays separate from the main app window state, and expanded Lightbox hotkey support.
+
+### Highlights
+
+- Use a more capable Lightbox with a real slideshow player that can move smoothly through images, GIFs, and videos in one flow.
+- Navigate with redesigned Lightbox controls that auto-hide, stay aligned to the media itself, and behave more consistently in both light and dark mode.
+- Open the Lightbox into its own dedicated fullscreen mode without changing the app window layout, side panels, or maximize state.
+- Control the Lightbox more directly with shortcut support for mute or unmute, fullscreen, play or pause, escape, and previous or next navigation.
+- Close, pause, mute, and move between items more reliably in the native video overlay with better theme syncing and fewer playback or tooltip issues.
+- Enjoy cleaner Lightbox contrast and stability after removing the shadow-heavy control treatments that caused clipping, blinking, and inconsistent rendering.
+
+### Added
+
+- Added a true Lightbox slideshow player that can auto-advance through supported media using the configured Player interval and shared slideshow state across image, GIF, and video viewing.
+- Added dedicated Lightbox close controls that remain accessible alongside the existing click-to-close behavior.
+- Added dedicated fullscreen Lightbox controls for both the web image or GIF viewer and the native video overlay.
+- Added a separate slideshow play or pause control at the center of the Lightbox while keeping independent video playback controls for videos.
+- Added configurable Lightbox player shortcuts including Ctrl+M for mute or unmute and Ctrl+F for fullscreen toggle, alongside the existing spacebar, escape, and arrow key controls.
+
+### Changed
+
+- Changed Lightbox controls to auto-hide after pointer inactivity and reappear on movement, while remaining visible when the pointer rests over a control.
+- Changed Lightbox fullscreen behavior to use a separate frameless fullscreen host so viewer fullscreen no longer changes the main MediaLens window state.
+- Changed Lightbox previous and next controls into edge-aligned side tabs that stay attached to the displayed media bounds instead of drifting into the background.
+- Changed Lightbox navigation to wrap back to the beginning and skip unsupported files so slideshow playback does not stall on invalid entries.
+- Changed image, GIF, and video Lightbox controls to follow a more consistent theme-aware contrast model across light and dark mode.
+- Changed Lightbox theme refresh behavior so open viewers update immediately when switching themes instead of waiting for the viewer to reopen.
+- Changed native video overlay layout so mute, video play or pause, close, and slideshow controls align more consistently with the Lightbox chrome.
+- Changed Lightbox icon and button treatment away from shadow-dependent rendering in favor of more stable high-contrast controls.
+- Changed native video overlay tooltips and volume slider styling to better match the active theme.
+- Changed Lightbox keyboard control support so both configurable shortcuts and built-in navigation keys work more consistently across image, GIF, and video viewing.
+
+---
+
+## v1.3.3
+
+### Summary
+
+This release focuses on faster large-library review workflows, a dedicated Bulk Metadata Editor, and expanded People organization tools. MediaLens is faster and more reliable when working through duplicates, similar files, metadata overrides, and growing People libraries, with additional polish across details and gallery menus.
+
+### Highlights
+
+- Use a dedicated Bulk Metadata Editor with independent layout settings to edit ratings, notes, collections, dates, and AI or text-detection overrides across many files from a single workspace.
+- Review duplicates and similar files more reliably with persistent cache reuse, clearer real progress reporting, and better handling for very large folders.
+- Organize People more easily with Favorite People, custom People groups, and profile-image actions directly from the gallery.
+- Work more confidently in the Details panel and gallery menus with better themed dropdowns, clearer text-detection controls, and more consistent right-click grouping.
+
+### Added
+
+- Added a dedicated Bulk Metadata Editor with its own Metadata settings scope, separate single-file and bulk layout preferences, and bulk editing support for ratings, notes, collections, dates, and AI and text-detection overrides.
+- Added persistent duplicate review caching that reuses completed review results across folder changes and app restarts.
+- Added persistent similar review caching with automatic invalidation when underlying media changes.
+- Added stable review signatures to safely determine when cached review results can be reused.
+- Added native progress reporting for duplicate and similar review preparation, hashing, grouping, ranking, cache reuse, and result generation.
+- Added Favorite People sections and favorite-star actions directly in the People gallery.
+- Added custom People groups and group membership management.
+- Added person profile image actions in the People gallery.
+- Added favorite-star toggles directly on People cards so favorite organization can be managed without leaving the gallery.
+
+### Changed
+
+- Changed duplicate and similar review loading so usable review results appear before large scans fully complete.
+- Changed similar-review grouping and ranking to scale better on large libraries through faster pHash neighbor search, safer cache reuse, and stale-result invalidation.
+- Changed bulk metadata controls to focus on truly editable override-oriented fields instead of mixing in unrelated text-editing surfaces.
+- Changed bulk and single-file override controls to use themed combo boxes that match MediaLens light mode, dark mode, and accent color behavior more consistently.
+- Changed combo box wheel handling across the native UI so closed dropdowns no longer change values accidentally while the sidebar is being scrolled.
+- Changed the Details panel text-detection override from a toggle to a clearer three-state dropdown that supports automatic detection, explicit text detected, and explicit no text detected.
+- Changed People merge behavior so custom group memberships are preserved more reliably when people are consolidated.
+- Changed gallery context menus to group related actions more consistently and improve scanning and predictability.
+
+---
+
+## v1.3.2
+
+### Summary
+
+This release focuses on workflow polish across MediaLens, making everyday cleanup work feel faster, clearer, and more dependable. Details, Collections, Settings, menus, and Action History all receive usability improvements, while numerous UI regressions and interaction delays have been resolved.
+
+### Highlights
+
+- Use an improved Details panel with collapsible sections, collection controls, unsupported-file handling, and more convenient save button locations.
+- Work faster with more responsive Action History and right-click menus, including visible loading feedback and less delay before menus or actions appear.
+- Customize keyboard shortcuts from a new Hotkey Shortcuts settings page with conflict detection and persistent overrides.
+- Navigate collections, pinned folders, and folder trees more predictably with right-click behavior that no longer changes the active gallery unexpectedly.
+- Enjoy a more polished Settings experience with better scrolling, full theme switching coverage, and corrected themed controls across light and dark mode.
+
+### Added
+
+- Added collection membership controls to the Details panel, including a themed Add to Collection action, clickable collection names, and per-collection removal controls for explicit memberships.
+- Added a dedicated unsupported-file Details state that keeps file identity visible while replacing media-only metadata sections with clear unsupported-file messaging.
+- Added a clear-search trashcan action inside the main gallery search box using existing MediaLens SVG assets and theme-aware hover styling.
+- Added new native menu entries for People Gallery, Unconfirmed People, and Unconfirmed Face Groups.
+- Added a Hotkey Shortcuts settings page with editable shortcut bindings, conflict validation, and persistent shortcut overrides.
+- Added a gallery context menu Duplicate action and active-collection removal support for both files and explicitly added folders.
+- Added dedicated footer notifications for undoable actions so recent edits appear immediately without waiting for Action History refreshes.
+- Added loading feedback in the Action History footer while history is being repopulated.
+- Added standard menu accelerators.
+
+### Changed
+
+- Changed the Details panel to use session-only collapse state memory so sections stay consistent while you switch files during a session but reset to expanded on a fresh launch.
+- Changed the Details panel layout, section rendering, and stabilization behavior to reduce blank space, improve grouped metadata organization, and better match the existing theme system.
+- Changed Details panel action rows for tags and descriptions to use responsive side-by-side layouts that can stack cleanly when width is limited.
+- Changed Settings > General to split startup options from gallery behavior, and changed all Settings pages to scroll within the dialog instead of forcing larger window sizes.
+- Changed Settings page scrollbars, theme propagation, and wrapper styling so settings content switches cleanly between light and dark mode and uses the same MediaLens scrollbar visuals.
+- Changed native menus to use standard Windows-style accelerators and visible shortcut labels, including Ctrl+O for Open Folder and clearer separators in the Edit menu.
+- Changed right-click menu grouping so file, compare, clipboard, collection, people, management, selection, and view actions are easier to scan.
+- Changed gallery and sidebar right-click behavior so folder trees and pinned folders no longer treat right-click as navigation or selection-changing input.
+- Changed Action History opening behavior so the window appears faster, refreshes after it is shown, and gives visible progress feedback while entries load.
+- Changed context menu responsiveness for duplicate, delete, paste, and remove-from-collection actions by closing the menu immediately and starting heavier work after the UI has a chance to repaint.
+- Changed delete workflows to reuse cached settings when available and show progress feedback sooner.
+- Changed People wording so Unconfirmed Review is now labeled Unconfirmed People in the People surfaces and menus.
+
+---
+
+## v1.3.1
+
+### Summary
+
+This release adds a new Bulk Rename workspace built for safe, preview-first file renaming. You can now build rename patterns with guided controls, review conflicts before anything changes, and rename matching sidecar files with clear visibility into the final result.
+
+### Highlights
+
+- Use the new Bulk Rename editor to build filename rules with tokens, guided controls, and a live preview before renaming files.
+- Review rename conflicts, invalid names, sidecar matches, and no-change rows in a dedicated preview table and optional pop-out window.
+- Work more comfortably in the bulk editor with smoother resizing, tabbed editor modes, sticky rename actions, and theme-matched controls.
+- Rate files with a new five-star metadata system that now flows through the Details panel, filters, sorting, and search.
+- Run or schedule background People scans from Settings and see clearer Local AI readiness guidance for People, tags, descriptions, and OCR.
+- Use an improved Action History with date-grouped sections, better detail-pane behavior, copy-path support, and broader undo coverage for People actions.
+
+### Added
+
+- Added a fourth Bulk Editor mode for Rename with pattern-based batch renaming, live preview generation, validation, and execution only after explicit confirmation.
+- Added a standalone batch rename engine with token parsing, rename plan generation, conflict detection, sidecar rename support, and safer execution flow.
+- Added guided rename controls for filename, folder, date, counter, people, cleanup, conflict handling, missing values, and saved rename settings presets.
+- Added a floating Preview Rename Table window so larger rename plans can be reviewed outside the right sidebar.
+- Added five-star file rating metadata across the Details panel, metadata settings, gallery filters, sorting, and search.
+- Added scheduled and on-demand Scan for People controls to Settings > Background Processes, including status, next run, and cancel support.
+- Added date-grouped Action History sections, copy-path support, and expanded undo/redo coverage for People review actions.
+
+### Changed
+
+- Changed bulk editor mode switching from plain buttons to responsive tab-style controls that fit better in smaller sidebar widths.
+- Changed bulk editor controls, popups, combo boxes, checkboxes, and preview surfaces to better match MediaLens light mode, dark mode, and accent theme styling.
+- Changed bulk editor resize behavior to avoid the severe sidebar drag stalls that previously affected Tags, Descriptions, Text OCR, and Rename layouts.
+- Changed Local AI recommended setup and status summaries to include InsightFace Buffalo for People and clearer task-based readiness reporting.
+- Changed Background Processes scheduling controls from popup dropdowns to clearer radio-button selectors while eliminating the empty flashing helper windows they were causing.
+- Changed guided search metadata ordering and chevron behavior for People and Rating to make those filters read more cleanly.
+- Changed Action History detail and list behavior to reduce layout jumps, preserve selection better, and make date-section navigation easier to use.
+- Changed startup and dialog theming behavior to reduce blank-window flashes and stale theme repaint issues across settings, Action History, and bulk editor surfaces.
+- Changed animated GIF rotation handling so rotating and undoing animated GIFs preserves the full animation instead of flattening to a single frame.
+
+---
+
+## v1.3.0
+
+### Summary
+
+This release introduces People to MediaLens as a new local facial recognition and people-browsing workspace. You can now scan for faces, group appearances by person, review matches, and move between People views and the normal library without losing the rest of your workflow.
+
+### Highlights
+
+- Browse a new People Gallery with named and unnamed person groups, favorite people, and profile images.
+- Scan folders for faces with background progress, pause and resume support, and faster rescans that can skip files already processed.
+- Review detected faces with confirmation tools, face overlays, profile image selection, and direct access to the Details panel for zoomable inspection.
+
+### Added
+
+- Added the new People feature to MediaLens with People Gallery, unnamed face groups, unconfirmed review, person profile images, and favorite people sections.
+- Added local face scanning with optional InsightFace runtime support through AI Models, including GPU-aware runtime detection, provider reporting, and scan progress in the footer.
+- Added person-aware search support so `person:Name` can open matched files directly from the main gallery and guided search flow.
+- Added People sections to the Details panel and metadata settings so detected people can be shown, hidden, reviewed, and rescanned alongside other file details.
+- Added review tools for naming whole groups, confirming all faces in a group, moving or renaming single faces, rejecting wrong matches, ignoring faces, and choosing a person's profile image from review or person search results.
+- Added face box and landmark overlays with People settings to control their visibility during review.
+- Added face-scan persistence so MediaLens can remember previously scanned files, skip rescans by default, and force full rescans when needed.
+
+### Changed
+
+- Changed People navigation so the dropdown can cleanly enter and exit People mode without trapping the gallery in a People-only view.
+- Changed People review cards to load the selected file into the normal Details panel, including larger preview support and wheel zoom for still images.
+- Changed People thumbnails to use face-aware square crops that keep the detected face centered while preserving overlay alignment for face boxes and landmarks.
+- Changed People review layout with sticky review headers, aligned action buttons, improved card spacing, themed dialogs, and better status feedback for profile image and favorite updates.
+- Changed supported People media handling so unsupported files are skipped from scanning and People review instead of appearing with broken results.
+
+---
+
+## v1.2.15
+
+### Summary
+
+This release makes duplicate and similar review less disruptive by keeping large review loads interruptible when you switch folders or views. MediaLens also sharpens and cleans up the image comparison panel so the before-and-after workspace looks tighter and reads more clearly.
+
+### Highlights
+
+- Switch away from large duplicate or similar folders without waiting for the current review build to finish.
+- Use a cleaner image comparison slider with a thinner handle and a proper horizontal resize cursor.
+- See sharper comparison slot image edges and tighter spacing around the left and right comparison previews.
+
+### Added
+
+- Added interruptible duplicate and similar gallery request handling so stale review loads stop when you change folders or views.
+- Added explicit cancellation checks across duplicate and similar hash backfill and grouping work to keep long review passes from monopolizing the active request.
+
+### Changed
+
+- Changed duplicate and similar review refreshes to clear stale pending gallery and count requests before starting a new load.
+- Changed the image comparison reveal slider to use a thinner, shorter handle and a horizontal resize cursor while hovering and dragging.
+- Changed the left and right comparison slot image layouts to remove extra bottom padding and margin.
+- Changed comparison slot borders and rounded thumbnail overlay rendering to produce sharper visible edges in the comparison panel.
+- Normalized scrollbars with matching size, color, and style for a more consistent modern look.
+
+---
+
+## v1.2.14
+
+### Summary
+
+This release improves the Background Processes experience by adding tabbed controls for text detection, OCR, and AI metadata workers. MediaLens gallery and bulk editor performance has also been heavily optimized to feel faster and more responsive during routine use.
+
+### Highlights
+
+- Schedule background text detection, OCR, and AI metadata worker passes directly from the Background Processes settings.
+- Enjoy faster gallery rendering and bulk editor scrolling with new short-lived caching and smarter thumbnail loading.
+- Filter out unsupported text and non-media files automatically during bulk actions.
+
+### Added
+
+- Added tabbed worker settings for Text Detection, OCR, AI Tags, and AI Descriptions under Background Processes.
+- Added scheduled and run-now controls for AI metadata workers.
+- Added short-lived caching for gallery entry results and counts to speed up UI refreshes.
+- Added focused performance logging for gallery entries.
+- Added automatic queueing of remaining hash backfills for duplicate and similar review loading.
+
+### Changed
+
+- Changed the scanner settings page name to Background Processes.
+- Changed scanner progress to use a shared footer status with a toast fallback.
+- Changed the bulk editor to automatically filter out text and non-media files from selections.
+- Changed bulk editor row input layout sync and thumbnail loading to work correctly while scrolling.
+- Changed gallery stylesheet loading to use direct ordered links for more reliable parsing.
+- Changed settings AI runtime status refreshes to debounce routine checks.
+- Changed web and native clickable controls to use pointing-hand cursors.
+
+---
+
+## v1.2.13
+
+### Summary
+
+This release makes review and cleanup workflows easier to trust by improving Action History, scanner feedback, and duplicate comparison layout. MediaLens now gives clearer explanations for recent actions, handles multi-file context actions more consistently, and makes duplicate review controls less cluttered.
+
+### Highlights
+
+- Review recent edits in a clearer Action History window with plain-English details and scoped metadata before-and-after summaries.
+- Delete, cut, or copy multiple selected gallery items from the right-click menu without falling back to only the clicked file.
+- Use duplicate and similar comparison views with less footer clutter while the comparison panel is open.
+
+### Added
+
+- Added a Delete All Action History control with themed warning styling and confirmation.
+- Added clearer Action History details that explain selected actions in plain language instead of exposing internal state labels.
+- Added visible before-and-after description values to new metadata edit history entries, including AI description fallback values before a user overwrites them.
+
+### Changed
+
+- Changed Action History metadata summaries so description, tag, and OCR edits only describe the fields that were actually edited.
+- Changed Action History item tables to use Item, Change, Status, and Action columns with user-facing state labels.
+- Changed Action History undo and redo controls to use clearer labels, tooltips, cursor states, and disabled styling.
+- Changed gallery right-click Delete, Cut, and Copy actions to respect the full multi-selection.
+- Changed the scanner and scan status handling to avoid repeated visible-page scan work and stale scan messages after switching pinned folders.
+- Changed duplicate and similar review views so the gallery footer hides while the comparison panel is open and returns when the panel closes or the view changes.
+
+---
+
+## v1.2.12
+
+### Summary
+
+This release polishes the gallery header, breadcrumb navigation, and grouped browsing behavior so everyday folder navigation takes less space and behaves more predictably. MediaLens now handles compact controls, address overflow, and date-grouped layouts more like a native file browser.
+
+### Highlights
+
+- Use a cleaner two-row gallery header with compact icon buttons for nested files, sorting, filtering, grouping, and date granularity.
+- Navigate long folder paths more easily with a This PC breadcrumb entry, Explorer-style overflow, and better drive switching.
+- Switch to Group By Date more reliably without group headers collapsing into masonry or grid columns.
+
+### Added
+
+- Added a This PC breadcrumb icon at the start of drive-based paths so Windows drives are easier to reach from the address bar.
+- Added Explorer-style breadcrumb overflow that moves hidden path segments into a dropdown from left to right as space gets tight.
+- Added compact SVG-only controls for Include nested files, Sort by, Filter by, Group by, and Group By Date granularity.
+- Added light, dark, and inactive SVG variants for the new compact gallery header controls.
+
+### Changed
+
+- Changed the gallery header layout so compact controls and search share the second row, with the search box expanding or shrinking before controls wrap.
+- Changed gallery header buttons, chips, search, and breadcrumbs to use more consistent heights, corners, spacing, and borders.
+- Changed breadcrumb menu dismissal so address bar dropdowns close when clicking outside the gallery as well as inside it.
+- Changed Group By Date rendering so grouped gallery headers keep the full-width grouped layout during refreshes and setting changes.
+- Changed gallery rendering so refreshes requested during an active render are queued and replayed instead of being dropped.
+- Changed the Guided Search Builder control heights and header spacing to better match the surrounding compact header controls.
+
+---
+
+## v1.2.11
+
+### Summary
+
+This release introduces persistent Action History with undo and redo across sessions, making large cleanup and metadata workflows safer, easier to review, and easier to recover from. MediaLens now tracks whether previous actions remain reversible, adds clearer history states, and improves workflow organization across editing and review tools.
+
+### Highlights
+
+- Review recent deletes, moves, copies, renames, metadata edits, hidden-status changes, and rotations in one Action History window.
+- Undo and redo supported actions from keyboard shortcuts or Action History while MediaLens checks stale recovery paths only when needed.
+- Use a cleaner Edit and View menu layout with themed history, backup, and local AI status windows.
+
+### Added
+
+- Added Action History with grouped rows, item-level details, search, filters, and undo/redo controls.
+- Added undo and redo support for deletes, moves, copies, renames, folder creation, metadata edits, hidden status changes, and rotations.
+- Added persistent history validation so recent undo and redo actions remain available across sessions as long as their files or retained copies are still recoverable.
+- Added selective item undo and redo for grouped history actions.
+- Added Bulk Description Editor to the Edit menu.
+
+### Changed
+
+- Changed redo shortcuts to support both Ctrl+Y and Ctrl+Shift+Z.
+- Changed Action History validation so broad checks run when the history window opens, while keyboard shortcuts validate only the next undo or redo candidate.
+- Changed partial group undo and redo history messages to report how many items were handled and skipped.
+- Changed Action History item states to show clearer labels for active, undone, unavailable, and externally changed items.
+- Changed Action History, Library Backup options, and related dialog styling to support light theme, dark theme, native title bars, and accent-aware controls.
+- Changed the Edit menu so Action History sits directly below Redo, bulk editors are grouped there, and Local AI Models and Status is labeled as an edit action.
+- Changed the View menu so Masonry appears first and duplicate/similar views are separated into their own group.
+- Changed the Library Backup export note to use shorter wording without legacy app details.
+
+---
+
+## v1.2.10
 
 ### Summary
 
