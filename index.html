@@ -5,16 +5,16 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description"
-    content="MediaLens is a local-first Windows media workspace for image editing, People and facial recognition, duplicate cleanup, OCR, AI metadata, bulk editing, search, and large-library browsing." />
-  <meta property="og:title" content="MediaLens - understand, edit, and organize your media library">
+    content="MediaLens is a local-first Windows workspace for browsing, searching, editing, comparing, cleaning up, and organizing large image libraries." />
+  <meta property="og:title" content="MediaLens - organize and understand your media library">
   <meta property="og:description"
-    content="Search by people, text, tags, metadata, and AI details. Edit images, review duplicates, manage People, run OCR, and bulk update large Windows media libraries locally.">
+    content="Browse large libraries, search by people and text, compare similar files, edit images, run OCR, and bulk update metadata locally on Windows.">
   <meta property="og:image"
-    content="https://medialens.glenbland.com/screenshots/2026-06-16/Screenshot-Image-Editor-Paintbrush.png">
+    content="https://medialens.glenbland.com/screenshots/2026-06-16/Screenshot-People-Gallery-01.png">
   <meta property="og:url" content="https://medialens.glenbland.com">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#111113" />
-  <title>MediaLens - understand, edit, and organize your media library</title>
+  <title>MediaLens - organize and understand your media library</title>
   <link rel="icon" href="screenshots/MediaLens-Logo-1024.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -26,14 +26,15 @@
       <span>MediaLens</span>
     </a>
     <nav class="nav-links" aria-label="Primary navigation">
-      <a href="#editor">Image Editor</a>
+      <a href="#overview">Overview</a>
+      <a href="#screens">Tour</a>
       <a href="#people">People</a>
       <a href="#cleanup">Cleanup</a>
-      <a href="#screens">Screens</a>
+      <a href="#bulk">Bulk tools</a>
       <a href="https://github.com/G1enB1and/MediaLens" target="_blank" rel="noreferrer">GitHub</a>
     </nav>
-    <a class="header-cta" href="https://github.com/G1enB1and/MediaLens/releases/latest" target="_blank"
-      rel="noreferrer">
+    <a class="header-cta" href="https://github.com/G1enB1and/MediaLens/releases/latest/download/MediaLens_Setup.exe"
+      target="_blank" rel="noreferrer">
       Download
     </a>
   </header>
@@ -41,119 +42,128 @@
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-visual" aria-hidden="true">
-        <img src="screenshots/2026-06-16/Screenshot-Image-Editor-Paintbrush.png" alt="" />
+        <img src="screenshots/2026-06-16/Screenshot-People-Gallery-01.png" alt="" />
       </div>
       <div class="hero-shade" aria-hidden="true"></div>
       <div class="hero-content" data-reveal>
         <h1 id="hero-title">MediaLens</h1>
         <p class="hero-copy">
-          A local-first Windows workspace for understanding, editing, searching, and cleaning up large media libraries.
-          Find images by people, text, tags, prompts, metadata, dates, and AI details, then edit and organize everything
-          without leaving the app.
+          A Windows workspace for large image libraries. Browse fast, search deeply, manage People, compare similar
+          files, run OCR, edit images, and bulk-update metadata without uploading your files.
         </p>
         <div class="hero-actions">
-          <a class="button primary" href="https://github.com/G1enB1and/MediaLens/releases/latest" target="_blank"
-            rel="noreferrer">
+          <a class="button primary" href="https://github.com/G1enB1and/MediaLens/releases/latest/download/MediaLens_Setup.exe"
+            target="_blank" rel="noreferrer">
             Download for Windows
           </a>
+          <a class="button secondary" href="https://github.com/G1enB1and/MediaLens/releases/latest" target="_blank"
+            rel="noreferrer">
+            Latest release page
+          </a>
           <a class="button secondary" href="https://github.com/G1enB1and/MediaLens" target="_blank" rel="noreferrer">
-            View source
+            GitHub homepage
           </a>
         </div>
         <div class="release-note">
           <span>Current release</span>
           <strong>v1.4.6</strong>
-          <span>Image Editor speed, People workflows, bulk editor refreshes, and native UI polish</span>
+          <span>local-first library management, People, OCR, cleanup, bulk editing, and Image Editor updates</span>
         </div>
       </div>
     </section>
 
-    <section class="proof-strip" aria-label="Product highlights">
-      <div data-reveal>
-        <strong>Understand every image</strong>
-        <span>Use local AI, OCR, facial recognition, metadata, tags, ratings, dates, and prompts to make a messy library
-          searchable.</span>
-      </div>
-      <div data-reveal>
-        <strong>Edit without context switching</strong>
-        <span>Open a layered, Photoshop-style editor with selections, crop, paint, text, filters, adjustments, and
-          responsive brush work.</span>
-      </div>
-      <div data-reveal>
-        <strong>Clean up with evidence</strong>
-        <span>Review exact duplicates, similar files, color shifts, crops, size changes, metadata differences, and
-          configurable keep rules.</span>
-      </div>
-    </section>
-
-    <section class="section feature-hero" id="editor" aria-labelledby="editor-title">
-      <div class="section-copy" data-reveal>
-        <p class="eyebrow">Built-in Image Editor</p>
-        <h2 id="editor-title">Edit images inside the same library you organize.</h2>
-        <p>
-          MediaLens now includes a layered editor for day-to-day image work: crop, resize, paint, erase, select, fill,
-          add text, adjust color, apply filters, and save without handing the file off to another app.
-        </p>
-        <ul class="feature-list">
-          <li>Layer panel with opacity, blend mode, previews, and layer visibility</li>
-          <li>Paint, eraser, fill, text, crop, Magic Wand, and Lasso workflows</li>
-          <li>Live brush strokes, soft edges, marching-ants selections, and drag-based wand sampling</li>
-          <li>Resizable on-canvas text bounds with remembered fonts and shared foreground color</li>
-        </ul>
-      </div>
-      <figure class="media-panel lift-on-scroll" data-reveal>
-        <img src="screenshots/2026-06-16/Screenshot-Image-Editor-Text.png"
-          alt="MediaLens Image Editor showing text editing, canvas rulers, and layers" />
-        <figcaption>Text, layers, tools, rulers, color controls, and image preview stay together in one editing
-          workspace.</figcaption>
-      </figure>
-    </section>
-
-    <section class="section visual-band" aria-labelledby="tools-title">
+    <section class="overview" id="overview" aria-labelledby="overview-title">
       <div class="section-heading" data-reveal>
-        <p class="eyebrow">Editor tools</p>
-        <h2 id="tools-title">Selection, paint, crop, and text tools are now first-class workflows.</h2>
+        <p class="eyebrow">What MediaLens does</p>
+        <h2 id="overview-title">One app for the whole media-library mess.</h2>
+        <p>
+          MediaLens is not just an editor or a duplicate finder. It is a local workspace for making a large visual
+          library easier to search, review, clean up, and maintain.
+        </p>
       </div>
-      <div class="tool-grid">
-        <figure data-reveal>
-          <img src="screenshots/2026-06-16/Screenshot-Image-Editor-Magic-Wand.png"
-            alt="MediaLens Image Editor Magic Wand selection workflow" />
-          <figcaption>Magic Wand supports drag sampling, cursor-size selection, and clear selection feedback.
-          </figcaption>
-        </figure>
-        <figure data-reveal>
-          <img src="screenshots/2026-06-16/Screenshot-Image-Editor-Lasso.png"
-            alt="MediaLens Image Editor Lasso selection workflow" />
-          <figcaption>Lasso selection adds freeform control for editing only the regions that matter.</figcaption>
-        </figure>
-        <figure data-reveal>
-          <img src="screenshots/2026-06-16/Screenshot-Image-Editor-Crop.png"
-            alt="MediaLens Image Editor crop workflow" />
-          <figcaption>Crop and transform work alongside the same library navigation and layer controls.</figcaption>
+      <div class="overview-grid" data-reveal>
+        <article>
+          <strong>Browse and search</strong>
+          <span>Move through large folders, dates, collections, tags, ratings, metadata, prompts, and text.</span>
+        </article>
+        <article>
+          <strong>People</strong>
+          <span>Detect faces locally, name people, review matches, and find every image a person appears in.</span>
+        </article>
+        <article>
+          <strong>Cleanup</strong>
+          <span>Review exact duplicates, near matches, color shifts, crops, and resized versions before deleting.</span>
+        </article>
+        <article>
+          <strong>Bulk editing</strong>
+          <span>Update tags, descriptions, OCR text, ratings, collections, metadata, People, and filenames.</span>
+        </article>
+        <article>
+          <strong>OCR and local AI</strong>
+          <span>Read text in images and optionally generate tags, descriptions, and AI metadata on your machine.</span>
+        </article>
+        <article>
+          <strong>Image Editor</strong>
+          <span>Make quick layered edits, crops, paint strokes, selections, text changes, and filters in place.</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section screen-selector" id="screens" aria-labelledby="screens-title">
+      <div class="section-copy" data-reveal>
+        <p class="eyebrow">Product tour</p>
+        <h2 id="screens-title">See the main workspaces first.</h2>
+        <p>
+          Switch through the current MediaLens screens before diving into the details below.
+        </p>
+      </div>
+      <div class="screen-stage" data-reveal>
+        <div class="screen-tabs" role="tablist" aria-label="MediaLens screenshots">
+          <button class="active" type="button" data-screen="screenshots/2026-06-16/Screenshot-People-Gallery-01.png"
+            data-caption="People Gallery groups faces into named, unnamed, favorite, hidden, and custom People sections.">People</button>
+          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-Advanced-Search-New-Large-Files-of-Pandas.png"
+            data-caption="Advanced Search finds media by people, objects, text, tags, dates, ratings, prompts, and metadata.">Search</button>
+          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-Duplicates-and-Similar-01.png"
+            data-caption="Duplicate and Similar review explains grouped files, color-shifted pairs, keep rules, and cleanup actions.">Cleanup</button>
+          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-Comparison-Color-Shift.png"
+            data-caption="Comparison mode gives you a clear side-by-side review for close variants and color shifts.">Compare</button>
+          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-Bulk-Metadata-Editor.png"
+            data-caption="Bulk Metadata updates ratings, collections, AI state, and other visible field groups for large selections.">Metadata</button>
+          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-Bulk-Descriptions-Editor.png"
+            data-caption="Bulk Descriptions lets you generate, edit, compare, and save captions across selected media.">Descriptions</button>
+          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-Text-OCR-Review.png"
+            data-caption="OCR Review compares text results with the source image and saves corrected text.">OCR</button>
+          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-Image-Editor-Paintbrush.png"
+            data-caption="Image Editor includes layers, paint tools, rulers, color, opacity, edge softness, and canvas-aware editing.">Editor</button>
+          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-Action-History-Rename.png"
+            data-caption="Action History records important changes so review and undo paths stay visible.">History</button>
+        </div>
+        <figure class="selected-screen">
+          <img id="screen-image" src="screenshots/2026-06-16/Screenshot-People-Gallery-01.png"
+            alt="Selected MediaLens product screenshot" />
+          <figcaption id="screen-caption">People Gallery groups faces into named, unnamed, favorite, hidden, and custom
+            People sections.</figcaption>
         </figure>
       </div>
     </section>
 
     <section class="section split-showcase" id="people" aria-labelledby="people-title">
       <figure class="media-panel" data-reveal>
-        <img src="screenshots/2026-06-16/Screenshot-People-Gallery-01.png"
-          alt="MediaLens People gallery with face groups and bulk People editor" />
-        <figcaption>People Gallery groups named, unnamed, favorite, hidden, and custom grouped people locally.
-        </figcaption>
+        <img src="screenshots/2026-06-16/Screenshot-People-Review-All-of-Person.png"
+          alt="MediaLens person review showing every image for one person" />
+        <figcaption>Review one person across every image they appear in.</figcaption>
       </figure>
       <div class="section-copy" data-reveal>
         <p class="eyebrow">People and facial recognition</p>
-        <h2 id="people-title">Find every photo of the people who matter.</h2>
+        <h2 id="people-title">Find photos by who is in them.</h2>
         <p>
-          Facial recognition runs locally and turns scattered folders into People workflows. Review faces, confirm
-          names, manage groups, mark favorites, hide unwanted people, choose profile images, and jump into every photo
-          where a person appears.
+          MediaLens detects faces locally and builds People views you can actually work with.
         </p>
         <ul class="feature-list">
-          <li>Named, unnamed, unconfirmed, favorite, hidden, and grouped People views</li>
-          <li>Review one image, every unconfirmed face, or all photos for one person</li>
-          <li>Bulk People editor with scan, rename, ignore, group, and selected-file context</li>
-          <li>Person-based search and gallery filtering across large libraries</li>
+          <li>Name people, confirm matches, and review unknown faces</li>
+          <li>Create custom People groups and favorite important people</li>
+          <li>Hide people or groups you do not want in normal views</li>
+          <li>Search and filter the library by person</li>
         </ul>
       </div>
     </section>
@@ -161,93 +171,56 @@
     <section class="section two-column cleanup-section" id="cleanup" aria-labelledby="cleanup-title">
       <div class="section-copy" data-reveal>
         <p class="eyebrow">Duplicate and similarity cleanup</p>
-        <h2 id="cleanup-title">Keep the right version for a reason.</h2>
+        <h2 id="cleanup-title">Clean up similar files without guessing.</h2>
         <p>
-          MediaLens groups exact duplicates and close variants, then explains the differences so cleanup decisions stay
-          reviewable. Recent releases improve color-shift detection and make best-version recommendations more careful
-          when files should be kept together.
+          MediaLens shows why files were grouped, then lets you decide what to keep.
         </p>
         <ul class="feature-list">
-          <li>Exact duplicate and perceptual similarity scans</li>
-          <li>Color-shift, crop, resize, compression, grayscale, and text-change detection</li>
-          <li>Configurable keep rules, manual review, metadata merge, and action history</li>
-          <li>Side-by-side comparison with reveal slider, synchronized zoom, and synchronized pan</li>
+          <li>Find exact duplicates and visually similar images</li>
+          <li>Spot crops, resized files, compression changes, and color shifts</li>
+          <li>Use configurable keep rules or manual review</li>
+          <li>Compare images side by side with synchronized zoom and pan</li>
         </ul>
       </div>
       <figure class="media-panel" data-reveal>
         <img src="screenshots/2026-06-16/Screenshot-Duplicates-and-Similar-01.png"
-          alt="MediaLens duplicate and similar files review with color-shifted pair labels" />
-        <figcaption>Similar review explains why files were grouped and keeps cleanup actions visible beside metadata.
+          alt="MediaLens duplicate and similar files review" />
+        <figcaption>Similarity review keeps grouped files, labels, keep choices, and preview metadata together.
         </figcaption>
       </figure>
     </section>
 
-    <section class="section workflow" aria-labelledby="workflow-title">
-      <div class="workflow-copy" data-reveal>
-        <p class="eyebrow">Daily workflow</p>
-        <h2 id="workflow-title">From chaotic folders to an organized working library.</h2>
-      </div>
-      <div class="steps" data-reveal>
-        <article>
-          <span>01</span>
-          <h3>Scan and understand</h3>
-          <p>Index folders, detect faces, read text, extract AI metadata, and generate local tags or descriptions when
-            you need them.</p>
-        </article>
-        <article>
-          <span>02</span>
-          <h3>Search and review</h3>
-          <p>Use guided search or advanced syntax to find people, objects, prompts, ratings, collections, dates, and
-            text inside images.</p>
-        </article>
-        <article>
-          <span>03</span>
-          <h3>Edit and compare</h3>
-          <p>Open the Image Editor, compare close variants, inspect details, and keep review context close to the
-            current file.</p>
-        </article>
-        <article>
-          <span>04</span>
-          <h3>Bulk update safely</h3>
-          <p>Apply tags, descriptions, OCR text, metadata, People changes, and batch renames across large selections.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section deep-dive" aria-labelledby="workspace-title">
-      <div class="section-copy" data-reveal>
-        <p class="eyebrow">Bulk tools and local AI</p>
-        <h2 id="workspace-title">Designed for libraries with thousands of decisions.</h2>
+    <section class="section bulk-showcase" id="bulk" aria-labelledby="bulk-title">
+      <div class="section-heading" data-reveal>
+        <p class="eyebrow">Bulk tools</p>
+        <h2 id="bulk-title">Update lots of files without tiny hidden dialogs.</h2>
         <p>
-          Bulk editors handle the repetitive work: tags, descriptions, OCR, metadata, People, collections, ratings, and
-          renames. Optional local AI helps generate searchable data while keeping files on your machine.
+          These screens are meant for real library work, so the website gives them room.
         </p>
       </div>
-      <div class="workspace-grid feature-shots">
+      <div class="large-shot-list">
         <figure data-reveal>
           <img src="screenshots/2026-06-16/Screenshot-Bulk-Tags-Editor-With-Tags-List.png"
             alt="MediaLens bulk tags editor with tag list and selected media" />
-          <figcaption>Bulk Tags shows common and uncommon tags and keeps the reusable tag list within reach.
-          </figcaption>
+          <figcaption>Bulk Tags shows selected files, shared tags, uncommon tags, and the reusable tag list in one
+            panel.</figcaption>
         </figure>
         <figure data-reveal>
           <img src="screenshots/2026-06-16/Screenshot-Bulk-Descriptions-Editor.png"
-            alt="MediaLens bulk descriptions editor with generated text controls" />
-          <figcaption>Bulk Descriptions supports AI generation, manual editing, and per-file review before saving.
+            alt="MediaLens bulk descriptions editor" />
+          <figcaption>Bulk Descriptions supports generated captions, manual edits, and per-file review before saving.
           </figcaption>
         </figure>
         <figure data-reveal>
           <img src="screenshots/2026-06-16/Screenshot-Bulk-Metadata-Editor.png"
-            alt="MediaLens bulk metadata editor with rating, collection, and AI fields" />
-          <figcaption>Bulk Metadata updates ratings, collections, AI flags, and visible field groups together.
-          </figcaption>
+            alt="MediaLens bulk metadata editor" />
+          <figcaption>Bulk Metadata updates ratings, collections, AI state, and other shared fields for large
+            selections.</figcaption>
         </figure>
         <figure data-reveal>
           <img src="screenshots/2026-06-16/Screenshot-Batch-Rename-Counter-Sidecar.png"
             alt="MediaLens batch rename editor with counter and sidecar options" />
-          <figcaption>Batch Rename previews filename changes, counters, sidecars, and save behavior before commit.
-          </figcaption>
+          <figcaption>Batch Rename previews counters, sidecars, and filename changes before you save.</figcaption>
         </figure>
       </div>
     </section>
@@ -256,76 +229,54 @@
       <figure class="media-panel" data-reveal>
         <img src="screenshots/2026-06-16/Screenshot-Text-OCR-Review.png"
           alt="MediaLens OCR review with image preview and editable OCR results" />
-        <figcaption>OCR Review compares recognition results with the source image and saves the corrected text back to
-          library data.</figcaption>
+        <figcaption>OCR Review lets you correct text before it becomes searchable library data.</figcaption>
       </figure>
       <div class="section-copy" data-reveal>
-        <p class="eyebrow">Search, OCR, and AI metadata</p>
+        <p class="eyebrow">Search, OCR, and local AI</p>
         <h2 id="ai-title">Make images searchable by what is inside them.</h2>
         <p>
-          MediaLens can search people, objects, text, tags, descriptions, ratings, dates, collections, prompts,
-          generation details, and metadata. AI models install only when needed and can run locally on CPU or GPU.
+          Search by people, objects, text, tags, descriptions, ratings, dates, collections, prompts, and metadata.
         </p>
         <ul class="feature-list">
-          <li>Fast OCR, AI OCR, editable text review, and bulk OCR actions</li>
-          <li>AI-generated tags and descriptions with local model setup controls</li>
-          <li>Prompt, seed, model, workflow, and generation metadata detection</li>
-          <li>Guided visual search plus advanced search syntax for power users</li>
+          <li>Review OCR text beside the original image</li>
+          <li>Generate tags and descriptions with optional local models</li>
+          <li>Inspect AI prompt and generation metadata</li>
+          <li>Use guided search or advanced search syntax</li>
         </ul>
       </div>
     </section>
 
-    <section class="section screen-selector" id="screens" aria-labelledby="screens-title">
+    <section class="section feature-hero" id="editor" aria-labelledby="editor-title">
       <div class="section-copy" data-reveal>
-        <p class="eyebrow">Product tour</p>
-        <h2 id="screens-title">Explore the current MediaLens workspace.</h2>
+        <p class="eyebrow">Image Editor</p>
+        <h2 id="editor-title">Make quick edits without leaving the library.</h2>
         <p>
-          v1.4.6 is much broader than the original website showed. Switch through current screenshots for editor,
-          People, cleanup, OCR, search, bulk editing, and history workflows.
+          The editor is useful when you need a crop, text note, paint stroke, selection, or small layered adjustment in
+          the middle of organizing files.
         </p>
+        <ul class="feature-list">
+          <li>Layers, opacity, visibility, and layer previews</li>
+          <li>Paint, eraser, fill, text, crop, Magic Wand, and Lasso tools</li>
+          <li>Live brush strokes and marching-ants selections</li>
+          <li>On-canvas text bounds and shared color controls</li>
+        </ul>
       </div>
-      <div class="screen-stage" data-reveal>
-        <div class="screen-tabs" role="tablist" aria-label="MediaLens screenshots">
-          <button class="active" type="button" data-screen="screenshots/2026-06-16/Screenshot-Image-Editor-Paintbrush.png"
-            data-caption="Image Editor includes layers, paint tools, rulers, foreground color, opacity, edge softness, and canvas-aware editing.">Editor</button>
-          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-People-Gallery-01.png"
-            data-caption="People Gallery groups faces into named, unnamed, favorite, hidden, and custom People sections.">People</button>
-          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-People-Review-All-of-Person.png"
-            data-caption="Review All shows every image for one person and keeps person-specific review actions in context.">Review</button>
-          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-Duplicates-and-Similar-01.png"
-            data-caption="Duplicate and Similar review explains grouped files, color-shifted pairs, keep rules, and cleanup actions.">Cleanup</button>
-          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-Comparison-Color-Shift.png"
-            data-caption="Comparison mode uses synchronized zoom, reveal controls, and clear side-by-side difference review.">Compare</button>
-          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-Bulk-Metadata-Editor.png"
-            data-caption="Bulk Metadata updates ratings, collections, AI state, and other visible field groups for large selections.">Metadata</button>
-          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-Bulk-Descriptions-Editor.png"
-            data-caption="Bulk Descriptions lets you generate, edit, compare, and save captions across selected media.">Descriptions</button>
-          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-Text-OCR-Review.png"
-            data-caption="OCR Review compares text recognition results with the source image and saves corrected text.">OCR</button>
-          <button type="button"
-            data-screen="screenshots/2026-06-16/Screenshot-Advanced-Search-New-Large-Files-of-Pandas.png"
-            data-caption="Advanced Search finds media by people, objects, text, tags, dates, ratings, prompts, and metadata.">Search</button>
-          <button type="button" data-screen="screenshots/2026-06-16/Screenshot-Action-History-Rename.png"
-            data-caption="Action History records destructive and organizational changes so review and undo paths stay visible.">History</button>
-        </div>
-        <figure class="selected-screen">
-          <img id="screen-image" src="screenshots/2026-06-16/Screenshot-Image-Editor-Paintbrush.png"
-            alt="Selected MediaLens product screenshot" />
-          <figcaption id="screen-caption">Image Editor includes layers, paint tools, rulers, foreground color, opacity,
-            edge softness, and canvas-aware editing.</figcaption>
-        </figure>
-      </div>
+      <figure class="media-panel lift-on-scroll" data-reveal>
+        <img src="screenshots/2026-06-16/Screenshot-Image-Editor-Text.png"
+          alt="MediaLens Image Editor showing text editing, canvas rulers, and layers" />
+        <figcaption>The Image Editor is one part of the broader MediaLens workspace.</figcaption>
+      </figure>
     </section>
 
     <section class="section audience" aria-labelledby="audience-title">
       <div data-reveal>
         <p class="eyebrow">Designed for</p>
-        <h2 id="audience-title">Built for people who actually work inside large image libraries.</h2>
+        <h2 id="audience-title">Built for people who live inside large image libraries.</h2>
       </div>
       <div class="audience-list" data-reveal>
         <span>AI image creators managing prompts, variants, and edited outputs</span>
         <span>Photographers sorting RAW exports, crops, edits, and near duplicates</span>
-        <span>Families organizing decades of photos by People and dates</span>
+        <span>Families organizing old photo folders by people and dates</span>
         <span>Dataset builders curating tags, captions, OCR, and quality signals</span>
         <span>Collectors turning scattered folders into searchable archives</span>
         <span>Power users who want local control over cleanup and metadata</span>
@@ -337,17 +288,20 @@
         <p class="eyebrow">Get MediaLens</p>
         <h2 id="download-title">Download the latest Windows installer.</h2>
         <p>
-          Install MediaLens, choose a folder, and start turning a large visual library into something searchable,
-          editable, and safe to clean up.
+          Install MediaLens, choose a folder, and start making your library searchable, editable, and easier to clean
+          up.
         </p>
         <div class="hero-actions">
-          <a class="button primary" href="https://github.com/G1enB1and/MediaLens/releases/latest" target="_blank"
-            rel="noreferrer">
-            Download latest release
+          <a class="button primary" href="https://github.com/G1enB1and/MediaLens/releases/latest/download/MediaLens_Setup.exe"
+            target="_blank" rel="noreferrer">
+            Download for Windows
           </a>
-          <a class="button secondary" href="https://github.com/G1enB1and/medialens-website" target="_blank"
+          <a class="button secondary" href="https://github.com/G1enB1and/MediaLens/releases/latest" target="_blank"
             rel="noreferrer">
-            Website repo
+            Latest release page
+          </a>
+          <a class="button secondary" href="https://github.com/G1enB1and/MediaLens" target="_blank" rel="noreferrer">
+            GitHub homepage
           </a>
         </div>
       </div>
@@ -357,9 +311,11 @@
   <footer class="site-footer">
     <span>MediaLens by Glen Bland</span>
     <div>
-      <a href="https://github.com/G1enB1and/MediaLens/releases/latest" target="_blank" rel="noreferrer">Releases</a>
-      <a href="https://github.com/G1enB1and/MediaLens" target="_blank" rel="noreferrer">App GitHub</a>
-      <a href="https://github.com/G1enB1and/medialens-website" target="_blank" rel="noreferrer">Website GitHub</a>
+      <a href="https://github.com/G1enB1and/MediaLens/releases/latest/download/MediaLens_Setup.exe" target="_blank"
+        rel="noreferrer">Download installer</a>
+      <a href="https://github.com/G1enB1and/MediaLens/releases/latest" target="_blank" rel="noreferrer">Latest release
+        page</a>
+      <a href="https://github.com/G1enB1and/MediaLens" target="_blank" rel="noreferrer">GitHub homepage</a>
     </div>
   </footer>
 
@@ -371,7 +327,7 @@
         "operatingSystem": "Windows",
         "applicationCategory": "MultimediaApplication",
         "softwareVersion": "1.4.6",
-        "downloadUrl": "https://github.com/G1enB1and/MediaLens/releases/latest",
+        "downloadUrl": "https://github.com/G1enB1and/MediaLens/releases/latest/download/MediaLens_Setup.exe",
         "codeRepository": "https://github.com/G1enB1and/MediaLens",
         "author": {
           "@type": "Person",
