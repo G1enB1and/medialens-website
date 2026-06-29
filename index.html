@@ -14,7 +14,7 @@
   <meta property="og:url" content="https://medialens.glenbland.com">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#111113" />
-  <title>MediaLens - organize and understand your media library</title>
+  <title>MediaLens - organize, search, edit, and understand your media library</title>
   <link rel="icon" href="screenshots/MediaLens-Logo-1024.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -31,6 +31,7 @@
       <a href="#people">People</a>
       <a href="#cleanup">Cleanup</a>
       <a href="#bulk">Bulk tools</a>
+      <a href="#editor">Image Editor</a>
       <a href="https://github.com/G1enB1and/MediaLens" target="_blank" rel="noreferrer">GitHub</a>
     </nav>
     <a class="header-cta" href="https://github.com/G1enB1and/MediaLens/releases/latest/download/MediaLens_Setup.exe"
@@ -61,7 +62,7 @@
             Latest release page
           </a>
           <a class="button secondary" href="https://github.com/G1enB1and/MediaLens" target="_blank" rel="noreferrer">
-            GitHub homepage
+            GitHub
           </a>
         </div>
         <div class="release-note">
@@ -84,11 +85,11 @@
       <div class="overview-grid" data-reveal>
         <article>
           <strong>Browse and search</strong>
-          <span>Move through large folders, dates, collections, tags, ratings, metadata, prompts, and text.</span>
+          <span>Move through large folders, dates, collections, tags, ratings, text, and other metadata.</span>
         </article>
         <article>
           <strong>People</strong>
-          <span>Detect faces locally, name people, review matches, and find every image a person appears in.</span>
+          <span>Detect faces, name people, review matches, and find every image a person appears in, all locally.</span>
         </article>
         <article>
           <strong>Cleanup</strong>
@@ -96,7 +97,7 @@
         </article>
         <article>
           <strong>Bulk editing</strong>
-          <span>Update tags, descriptions, OCR text, ratings, collections, metadata, People, and filenames.</span>
+          <span>Update tags, descriptions, OCR text, ratings, collections, People, filenames, and metadata.</span>
         </article>
         <article>
           <strong>OCR and local AI</strong>
@@ -104,7 +105,7 @@
         </article>
         <article>
           <strong>Image Editor</strong>
-          <span>Make quick layered edits, crops, paint strokes, selections, text changes, and filters in place.</span>
+          <span>Make quick edits, crops, selections, filters, paint strokes, and text changes, in a familiar layer based editor.</span>
         </article>
       </div>
     </section>
@@ -112,7 +113,7 @@
     <section class="section screen-selector" id="screens" aria-labelledby="screens-title">
       <div class="section-copy" data-reveal>
         <p class="eyebrow">Product tour</p>
-        <h2 id="screens-title">See the main workspaces first.</h2>
+        <h2 id="screens-title">See the main workspaces.</h2>
         <p>
           Switch through the current MediaLens screens before diving into the details below.
         </p>
@@ -141,7 +142,7 @@
         <figure class="selected-screen">
           <img id="screen-image" src="screenshots/2026-06-16/Screenshot-People-Gallery-01.png"
             alt="Selected MediaLens product screenshot" />
-          <figcaption id="screen-caption">People Gallery groups faces into named, unnamed, favorite, hidden, and custom
+          <figcaption id="screen-caption">People Gallery groups faces into named, unnamed, favorite, custom, and hidden
             People sections.</figcaption>
         </figure>
       </div>
@@ -157,13 +158,13 @@
         <p class="eyebrow">People and facial recognition</p>
         <h2 id="people-title">Find photos by who is in them.</h2>
         <p>
-          MediaLens detects faces locally and builds People views you can actually work with.
+          MediaLens detects faces and builds People views that are easy to work with.
         </p>
         <ul class="feature-list">
           <li>Name people, confirm matches, and review unknown faces</li>
           <li>Create custom People groups and favorite important people</li>
           <li>Hide people or groups you do not want in normal views</li>
-          <li>Search and filter the library by person</li>
+          <li>Search and filter your library by person</li>
         </ul>
       </div>
     </section>
@@ -193,9 +194,9 @@
     <section class="section bulk-showcase" id="bulk" aria-labelledby="bulk-title">
       <div class="section-heading" data-reveal>
         <p class="eyebrow">Bulk tools</p>
-        <h2 id="bulk-title">Update lots of files without tiny hidden dialogs.</h2>
+        <h2 id="bulk-title">Update lots of files quickly and easily.</h2>
         <p>
-          These screens are meant for real library work, so the website gives them room.
+          MediaLens has dedicated bulk editors for updating Tags, Descriptions, Text, People, Ratings, Collections, Filenames, and more acorss many files quickly. 
         </p>
       </div>
       <div class="large-shot-list">
@@ -208,7 +209,7 @@
         <figure data-reveal>
           <img src="screenshots/2026-06-16/Screenshot-Bulk-Descriptions-Editor.png"
             alt="MediaLens bulk descriptions editor" />
-          <figcaption>Bulk Descriptions supports generated captions, manual edits, and per-file review before saving.
+          <figcaption>Bulk Descriptions supports AI generated captions, manual edits, and per-file review before saving.
           </figcaption>
         </figure>
         <figure data-reveal>
@@ -220,7 +221,7 @@
         <figure data-reveal>
           <img src="screenshots/2026-06-16/Screenshot-Batch-Rename-Counter-Sidecar.png"
             alt="MediaLens batch rename editor with counter and sidecar options" />
-          <figcaption>Batch Rename previews counters, sidecars, and filename changes before you save.</figcaption>
+          <figcaption>Batch Rename lets you configure rename rules, counters, conflict resolution, sidecar files, then review changes before applying.</figcaption>
         </figure>
       </div>
     </section>
@@ -229,7 +230,7 @@
       <figure class="media-panel" data-reveal>
         <img src="screenshots/2026-06-16/Screenshot-Text-OCR-Review.png"
           alt="MediaLens OCR review with image preview and editable OCR results" />
-        <figcaption>OCR Review lets you correct text before it becomes searchable library data.</figcaption>
+        <figcaption>OCR Review lets you detect and correct text found in images so it can become searchable library data.</figcaption>
       </figure>
       <div class="section-copy" data-reveal>
         <p class="eyebrow">Search, OCR, and local AI</p>
@@ -251,7 +252,7 @@
         <p class="eyebrow">Image Editor</p>
         <h2 id="editor-title">Make quick edits without leaving the library.</h2>
         <p>
-          The editor is useful when you need a crop, text note, paint stroke, selection, or small layered adjustment in
+          The editor is useful when you need a crop, rotate, filter, layered adjustment, text note, paint, or selection, in
           the middle of organizing files.
         </p>
         <ul class="feature-list">
@@ -262,7 +263,7 @@
         </ul>
       </div>
       <figure class="media-panel lift-on-scroll" data-reveal>
-        <img src="screenshots/2026-06-16/Screenshot-Image-Editor-Text.png"
+        <img src="screenshots/2026-06-16/Screenshot-Image-Editor-Magic-Wand.png"
           alt="MediaLens Image Editor showing text editing, canvas rulers, and layers" />
         <figcaption>The Image Editor is one part of the broader MediaLens workspace.</figcaption>
       </figure>
@@ -301,7 +302,7 @@
             Latest release page
           </a>
           <a class="button secondary" href="https://github.com/G1enB1and/MediaLens" target="_blank" rel="noreferrer">
-            GitHub homepage
+            GitHub
           </a>
         </div>
       </div>
@@ -315,7 +316,7 @@
         rel="noreferrer">Download installer</a>
       <a href="https://github.com/G1enB1and/MediaLens/releases/latest" target="_blank" rel="noreferrer">Latest release
         page</a>
-      <a href="https://github.com/G1enB1and/MediaLens" target="_blank" rel="noreferrer">GitHub homepage</a>
+      <a href="https://github.com/G1enB1and/MediaLens" target="_blank" rel="noreferrer">GitHub</a>
     </div>
   </footer>
 
